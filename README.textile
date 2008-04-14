@@ -2,3 +2,12 @@ Beware, some of these will take over some of your global keyboard shortcuts. It 
 
 Balance Jr is the most useful thing evar. I have it bound to @home@ and @end@
 
+h2. Live Preview of HTML, CSS & Source Code
+
+# Open the Web Preview Window from the Window menu.
+# Set your pipe through script to @"$HOME/Library/Application Support/TextMate/Bundles/subtleGradient.tmBundle/Support/bin/42_TextMate_live_preview.rb"@ _including quotes_
+** You might have to adjust the path to wherever you install your bundles.
+
+Then it'll automatically refresh as you edit your code. It does a clickable diff of your unsaved changes in source files. It sets the @<base>@ tag of any html file to your @$TM_PROJECT_SITEURL@. And it previews your CSS by injecting it into a @<style>@ tag inside the html of whatever url is in the file @/tmp/42_tm_css_live_preview_url.stupid_way_to_save_info@. It might do some other stuff too, but I completely forget now.
+
+Oh yeah, it also does a live render of your Textile or Markdown documents and runs your javascript code. It's all based on the current language selected for your file.
