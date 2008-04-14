@@ -1,1 +1,4 @@
 Beware, some of these will take over some of your global keyboard shortcuts. It doesn't interfere with anything I use obviously since I use all this stuff.
+
+Balance Jr is the most useful thing evar. I have it bound to @home@ and @end@
+
