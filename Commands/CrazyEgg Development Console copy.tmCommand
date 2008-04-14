@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>cat &lt;&lt;EOF
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;&lt;html&gt;&lt;head&gt;
+&lt;style type="text/css" media="screen"&gt;
+/* &lt;![CDATA[ */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: white;
+  color:      black;
+  font: 11px "Consolas", monospace;
+  padding: 10px;
+}
+
+/* ]]&gt; */
+&lt;/style&gt;
+&lt;script type="text/javascript"&gt;
+
+Element = {};
+Element.scrollTo = function(element) {
+  element = document.getElementById(element);
+  var x = element.x ? element.x : element.offsetLeft,
+      y = element.y ? element.y : element.offsetTop;
+  window.scrollTo(x, y);
+};
+
+function done(){
+  document.getElementById("result").innerHTML += 'done'
+};
+
+/*var myCommand = TextMate.system("tail -f /Users/taylott/Sites/crazyegg.trunk/log/development.log", done);*/
+/*var myCommand = TextMate.system("ping www.crazyegg.com", done);*/
+var myCommand = TextMate.system("cd /Users/taylott/Sites/crazyegg.trunk/ &amp;&amp; /usr/local/bin/rake test", done);
+myCommand.onreadoutput = outputHandler;
+myCommand.onreaderror  = outputHandler;
+
+function outputHandler(currentStringOnStdout){
+  document.getElementById("result").innerHTML += currentStringOnStdout;
+  Element.scrollTo('end');
+}
+
+&lt;/script&gt;
+  &lt;title&gt;&lt;/title&gt;
+&lt;/head&gt;&lt;body&gt;
+	&lt;pre id="result"&gt;&lt;/pre&gt;
+	&lt;p id="end"&gt;&lt;input type="button" onclick="myCommand.cancel();" value="STOP" /&gt;&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;
+EOF
+</string>
+	<key>fallbackInput</key>
+	<string>document</string>
+	<key>input</key>
+	<string>none</string>
+	<key>name</key>
+	<string>CrazyEgg Development Console copy</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>uuid</key>
+	<string>C6600DFC-49D0-469B-BCD8-62741EEFD47B</string>
+</dict>
+</plist>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Typing Pairs: Defaults WikiFormatting</string>
+	<key>scope</key>
+	<string>text.html.wikiformatting</string>
+	<key>settings</key>
+	<dict>
+		<key>smartTypingPairs</key>
+		<array>
+			<array>
+				<string>"</string>
+				<string>"</string>
+			</array>
+			<array>
+				<string>(</string>
+				<string>)</string>
+			</array>
+			<array>
+				<string>{</string>
+				<string>}</string>
+			</array>
+			<array>
+				<string>[</string>
+				<string>]</string>
+			</array>
+			<array>
+				<string>“</string>
+				<string>”</string>
+			</array>
+			<array>
+				<string>`</string>
+				<string>`</string>
+			</array>
+			<array>
+				<string>_</string>
+				<string>_</string>
+			</array>
+			<array>
+				<string>=</string>
+				<string>=</string>
+			</array>
+			<array>
+				<string>~</string>
+				<string>~</string>
+			</array>
+			<array>
+				<string>^</string>
+				<string>^</string>
+			</array>
+			<array>
+				<string>,</string>
+				<string>,</string>
+			</array>
+		</array>
+	</dict>
+	<key>uuid</key>
+	<string>ADA57311-A066-4216-8526-D2EEC04D8137</string>
+</dict>
+</plist>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>export ALIGN_TO="`
+   export __CF_USER_TEXT_ENCODING=$UID:0x8000100:0x8000100
+   if [[ $(pbpaste|wc -l) -eq 0 ]]
+      then pbpaste
+      else echo '='
+   fi
+`"
+"$TM_BUNDLE_SUPPORT/bin/assignment-block-tidier.rb"
+</string>
+	<key>fallbackInput</key>
+	<string>document</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^~@{</string>
+	<key>name</key>
+	<string>Align paste</string>
+	<key>output</key>
+	<string>replaceSelectedText</string>
+	<key>uuid</key>
+	<string>37E038E7-EB1C-4F7D-A673-987D20C65243</string>
+</dict>
+</plist>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>\${${1:1}:${2:${TM_SELECTED_TEXT:TEXT TO TEST FOR}}}${4:\${${1:1}/(.+)/(?1:${3:THIS WILL VANISH WHEN YOU ERASE THE CORRESPONDING TEXT})/\}}</string>
+	<key>keyEquivalent</key>
+	<string>^$</string>
+	<key>name</key>
+	<string>Snippet Tab Stop with optional text</string>
+	<key>scope</key>
+	<string>source.tmSnippet</string>
+	<key>tabTrigger</key>
+	<string>$</string>
+	<key>uuid</key>
+	<string>60BCB823-BF46-420B-8572-360A8542E705</string>
+</dict>
+</plist>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#export bookmarks=$HOME/Library/Application\ Support/TextMate/bookmarks.markdown
+export bookmarks=$HOME/Library/Application\ Support/TextMate/bookmarks.html
+export bookmarks_header=$HOME/Library/Application\ Support/TextMate/bookmarks_header.html
+export bookmarks_footer=$HOME/Library/Application\ Support/TextMate/bookmarks_footer.html
+
+touch "$bookmarks_header"
+touch "$bookmarks"
+touch "$bookmarks_footer"
+
+cat "$bookmarks_header"
+cat "$bookmarks"
+cat "$bookmarks_footer"
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^@b</string>
+	<key>name</key>
+	<string>Bookmarks</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>uuid</key>
+	<string>9000D73A-5A16-41C4-94BA-9FC716E9B60C</string>
+</dict>
+</plist>

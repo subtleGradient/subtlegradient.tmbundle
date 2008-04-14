@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>### Refreshes the CSS in the top Safari document
+### Using the bookmarklet found at http://dojotoolkit.org/~david/recss.html
+### 
+### Converted to Applescript by Thomas Aylott - http://subtleGradient.com
+###
+
+osascript -e 'tell the application "Safari" to do JavaScript "document.location=\"javascript:void(function(){var%20i,a,s;a=document.getElementsByTagName('\''link'\'');for(i=0;i%3Ca.length;i++){s=a[i];if(s.rel.toLowerCase().indexOf('\''stylesheet'\'')%3E=0&amp;&amp;s.href)%20{var%20h=s.href.replace(/(&amp;|%5C?)forceReload=\\d+/,'\'''\'');s.href=h+(h.indexOf('\''?'\'')%3E=0?'\''&amp;'\'':'\''?'\'')+'\''forceReload='\''+(new%20Date().valueOf())}}})();\";" in document 1' &amp;&gt;/dev/null &amp;
+
+echo "Safari CSS Refreshing…"
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@R</string>
+	<key>name</key>
+	<string>Refresh Safari CSS</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>source.css</string>
+	<key>uuid</key>
+	<string>8937BF02-C23D-4810-83D8-0AFD2DEF4A01</string>
+</dict>
+</plist>

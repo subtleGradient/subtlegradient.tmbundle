@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>###	Refresh All Active Browsers - OmniWeb, Safari, Firefox &amp; IE
+### v1.01. 2005-03-29
+### Modified by Thomas Aylott - http://subtleGradient.com
+###
+
+# Check if Safari is running, if so refresh
+osascript -e 'tell app "Safari" to do JavaScript "window.location.reload();" in first document'
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@r</string>
+	<key>name</key>
+	<string>Refresh Safari</string>
+	<key>output</key>
+	<string>discard</string>
+	<key>scope</key>
+	<string>text.html, source.css, source.js.prototype</string>
+	<key>uuid</key>
+	<string>047B06DF-EA70-4489-B384-67782E776E61</string>
+</dict>
+</plist>

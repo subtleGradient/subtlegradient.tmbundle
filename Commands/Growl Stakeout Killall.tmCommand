@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>killall gstakeout &amp;&gt;/dev/null &amp;
+killall stakeout &amp;&gt;/dev/null &amp;
+echo 'Killing stakeout…'
+ps -ax|grep stakeout
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^$</string>
+	<key>name</key>
+	<string>Stakeout Killall</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>512C0231-071F-4AC4-AEE6-E727A6778459</string>
+</dict>
+</plist>

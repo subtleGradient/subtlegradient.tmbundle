@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>tmsnippet</string>
+	</array>
+	<key>foldingStartMarker</key>
+	<string>/\*\*|\{\s*$</string>
+	<key>foldingStopMarker</key>
+	<string>\*\*/|^\s*\}</string>
+	<key>keyEquivalent</key>
+	<string>^~S</string>
+	<key>name</key>
+	<string>Snippet</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>begin</key>
+			<string>(?&lt;!\\)\${\b\w+\b:</string>
+			<key>end</key>
+			<string>}</string>
+			<key>name</key>
+			<string>string.quoted.snippet.tmsnippet</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>\\.</string>
+					<key>name</key>
+					<string>constant.character.escaped.tmsnippet</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>$base</string>
+				</dict>
+			</array>
+			<key>swallow</key>
+			<string>\\}</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>source.tmSnippet</string>
+	<key>uuid</key>
+	<string>5C9CA0DC-94C6-4629-A8EF-DE34E9CE0258</string>
+</dict>
+</plist>

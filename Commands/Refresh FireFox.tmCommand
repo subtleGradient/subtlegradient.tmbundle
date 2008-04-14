@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>### Created by Thomas Aylott - http://subtleGradient.com
+### Enjoy
+osascript -e 'activate application "Firefox 2 Intel"' -e 'tell application "System Events" to tell process "firefox-bin" to key code 96 -- F5 key' -e 'activate application "TextMate"' &amp;&gt;/dev/null &amp;
+echo "FireFox Refreshing…"
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>name</key>
+	<string>Refresh FireFox</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>CB92FA77-3F28-4590-B1E7-62E9FF109759</string>
+</dict>
+</plist>

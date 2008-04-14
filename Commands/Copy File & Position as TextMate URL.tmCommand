@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+U="txmt://open?url=file://#{ENV['TM_FILEPATH'].gsub(' ','%20').gsub(ENV['HOME'],'~')}&amp;line=#{ENV['TM_LINE_NUMBER']}&amp;column=#{ENV['TM_COLUMN_NUMBER']}"
+`pbcopy &lt;&lt;&lt; "#{U}"`
+puts "\"#{U}\" Copied to clipboard"
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^$</string>
+	<key>name</key>
+	<string>Bookmark Selection to Clipboard</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>D49C7FC8-8582-426A-9297-60AAC6005B6E</string>
+</dict>
+</plist>

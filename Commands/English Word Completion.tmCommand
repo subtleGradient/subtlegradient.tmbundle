@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby -wKU
+
+begin
+  require ENV['TM_SUPPORT_PATH'] + "/lib/dialog"
+  
+  selection = ENV['TM_SELECTED_TEXT']
+  search = ENV['TM_CURRENT_WORD']
+  search = ENV['TM_CURRENT_WORD'].gsub(/#{selection}$/,'') if selection
+
+  words = `grep -m 2000 "^#{search}" /usr/share/dict/web2`.split("\n")
+  abort if words.empty?
+
+  val = Dialog.menu(words)
+  val = words[val].gsub(/^#{search}/,'')
+  print "${0:#{val}}"
+rescue
+  print "${0:#{selection}}"
+end
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^	</string>
+	<key>name</key>
+	<string>English Word Completion</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>text</string>
+	<key>uuid</key>
+	<string>10C0A9DD-F5E7-4227-B749-D3ACCE3B376F</string>
+</dict>
+</plist>

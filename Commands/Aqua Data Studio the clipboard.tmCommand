@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#echo $TM_SELECTED_TEXT|pbcopy
+osascript -e "activate application \"TextMate\"
+tell application \"System Events\" to tell process \"textmate\" to keystroke \"c\" using {command down}
+activate application \"Aqua Data Studio\"
+tell application \"System Events\"
+tell process \"Aqua Data Studio\"
+keystroke \"a\" using {command down}
+keystroke \"v\" using {command down}
+delay 0.2
+keystroke return using {command down}
+end tell
+end tell" &amp;&gt;/dev/null &amp;
+</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>@r</string>
+	<key>name</key>
+	<string>Aqua Data Studio the clipboard</string>
+	<key>output</key>
+	<string>discard</string>
+	<key>scope</key>
+	<string>source.sql</string>
+	<key>uuid</key>
+	<string>4E41AA77-FAFD-4B53-9C16-EB3A42E7B1B5</string>
+</dict>
+</plist>

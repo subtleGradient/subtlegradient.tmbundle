@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>cat &lt;&lt;EOF
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;
+
+&lt;html&gt;
+&lt;head&gt;
+&lt;style type="text/css" media="screen"&gt;
+/* &lt;![CDATA[ */
+* {
+	margin:0;
+	padding:0;
+}
+body {
+	background:black;
+	color:white;
+	font: 11px "Consolas", monospace;
+	padding:10px;
+}
+/* ]]&gt; */
+&lt;/style&gt;
+&lt;script type="text/javascript"&gt;
+function unixify(arg) {
+	var cmd = arg;
+	var res = TextMate.system(cmd, null).outputString;
+	document.getElementById("history").innerText += arg+'\n';
+	document.getElementById("result").innerText = res;
+	window.location.hash = "result";
+	false
+}
+&lt;/script&gt;
+
+&lt;title&gt;&lt;/title&gt;
+&lt;style type="text/css"&gt;
+input.c1 {width:100%;}
+&lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+	&lt;pre id="history"&gt;&lt;/pre&gt;
+	&lt;form onsubmit="unixify(document.getElementById('command').value);return false"&gt;
+		&lt;input type="text" name="command" value="PWD" id="command" class="c1"&gt;
+	&lt;/form&gt;
+	&lt;hr&gt;
+	&lt;pre id="result"&gt;&lt;/pre&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+EOF
+</string>
+	<key>fallbackInput</key>
+	<string>document</string>
+	<key>input</key>
+	<string>none</string>
+	<key>name</key>
+	<string>Virtual Terminal</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>uuid</key>
+	<string>C3055F04-4BA8-495E-BCB3-DFAD57E68EEE</string>
+</dict>
+</plist>

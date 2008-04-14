@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string># Copy current file &amp; cursor position as TextMate URL
+# Input: None
+# Output: Show as Tool Tip
+
+TEXT=`cat /dev/stdin|sed 's/&lt;/\\&amp;lt;/g'|sed 's/&gt;/\\&amp;gt;/g'`
+export bookmarks=$HOME/Library/Application\ Support/TextMate/bookmarks.html
+echo "&lt;a href=\"txmt://open?url=file://${TM_FILEPATH// /%20}&amp;line=$TM_LINE_NUMBER&amp;column=$TM_COLUMN_NUMBER\"&gt;&lt;strong&gt;&lt;code&gt; $TM_FILENAME &lt;/code&gt;&lt;/strong&gt; &lt;em&gt; &lt;code&gt;$TEXT&lt;/code&gt; &lt;/em&gt;&lt;/a&gt;&lt;br/&gt;" &gt;&gt; "$bookmarks"
+
+echo "$TM_FILENAME - $TEXT"
+echo "Added to Bookmarks ⌘⌃B"
+
+# Copy current file &amp; cursor position as TextMate URL
+# Input: None
+# Output: Show as Tool Tip
+
+# TEXT=`cat /dev/stdin`
+# export bookmarks=$HOME/Library/Application\ Support/TextMate/bookmarks.markdown
+# echo "[**\` $TM_FILENAME \`** &lt;em&gt;\` $TEXT \`&lt;/em&gt;](txmt://open?url=file://${TM_FILEPATH// /%20}&amp;line=$TM_LINE_NUMBER&amp;column=$TM_COLUMN_NUMBER)    " &gt;&gt; "$bookmarks"
+# echo "$TM_FILENAME - $TEXT"
+# echo "Added to Bookmarks ⌘⌃B"
+</string>
+	<key>fallbackInput</key>
+	<string>word</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>@d</string>
+	<key>name</key>
+	<string>Bookmark Selection to Bookmarks</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>372012EE-8E97-4611-B7EF-B47538F92D32</string>
+</dict>
+</plist>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>. "$TM_BUNDLE_SUPPORT/lib/subtletools.sh"
+
+#export bookmarks=$HOME/Library/Application\ Support/TextMate/bookmarks.markdown
+export bookmarks=$HOME/Library/Application\ Support/TextMate/bookmarks.html
+export bookmarks_header=$HOME/Library/Application\ Support/TextMate/bookmarks_header.html
+export bookmarks_footer=$HOME/Library/Application\ Support/TextMate/bookmarks_footer.html
+
+touch "$bookmarks_header"
+touch "$bookmarks"
+touch "$bookmarks_footer"
+
+cat "$bookmarks_header"
+tm_live_cat "$bookmarks"
+cat "$bookmarks_footer"
+
+auto_resize_js 10 22
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^@b</string>
+	<key>name</key>
+	<string>Bookmarks Live</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>uuid</key>
+	<string>DE4A4177-5216-40FC-979F-77BECF6389FB</string>
+</dict>
+</plist>

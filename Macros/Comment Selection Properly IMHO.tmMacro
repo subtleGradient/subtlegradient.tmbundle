@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>commands</key>
+	<array>
+		<dict>
+			<key>argument</key>
+			<dict>
+				<key>beforeRunningCommand</key>
+				<string>nop</string>
+				<key>bundlePath</key>
+				<string>/Library/Application Support/TextMate/Bundles/Source.tmbundle</string>
+				<key>command</key>
+				<string>#!/usr/bin/env ruby
+
+# by James Edward Gray II &lt;james (at) grayproductions.net&gt;
+
+# find all available comment variables
+var_suffixes = [""]
+2.upto(1.0/0.0) do |n|
+  if ENV.include? "TM_COMMENT_START_#{n}"
+    var_suffixes &lt;&lt; "_#{n}"
+  else
+    break
+  end
+end
+
+text    = STDIN.read
+default = nil  # the comment we will insert, if none are removed
+
+# try a removal for each comment...
+var_suffixes.each do |suffix|
+  # build comment
+  com = { :start     =&gt; ENV["TM_COMMENT_START#{suffix}"] || "# ",
+          :end       =&gt; ENV["TM_COMMENT_END#{suffix}"]   || "",
+          :mode      =&gt; ENV["TM_COMMENT_MODE#{suffix}"]  || (ENV["TM_COMMENT_END#{suffix}"] ? "block" : "line"),
+          :no_indent =&gt; ENV["TM_COMMENT_DISABLE_INDENT#{suffix}"] }
+  
+  com[:esc_start], com[:esc_end] = [com[:start], com[:end]].map do |str|
+    str.gsub(/[\\|()\[\].?*+{}^$]/, '\\\\\&amp;').
+        gsub(/\A\s+|\s+\z/, '(?:\&amp;)?')
+  end
+  
+  # save the first one as our insertion default
+  default = com if default.nil?
+  
+  # try a removal
+  case com[:mode]
+  when "line"  # line by line comment
+    if text != "" &amp;&amp; text.all? { |line| line =~ /\A\s*(#{com[:esc_start]}|$)/ }
+      print text.gsub( /^(\s*)#{com[:esc_start]}(.*)#{com[:esc_end]}(\s*)$/,
+                       '\1\2\3' )
+      exit
+    end
+  when "block" # block comment
+    regex = /\A(\s*)#{com[:esc_start]}(.*?)#{com[:esc_end]}(\s*)\z/m
+    if text =~ regex
+      print text.sub(regex, '\1\2\3')
+      exit
+    end
+  end
+end
+
+# none of our removals worked, so preform an insert (minding indent setting)
+case default[:mode]
+when "line"  # apply comment line by line
+  if default[:no_indent] || text == ""
+    print text.gsub(/^.*$/, "#{default[:start]}\\&amp;#{default[:end]}")
+  else
+    indent = text.reject { |line| line =~ /^\s*$/ }.
+             collect { |line| /^(\s*)/.match(line)[1] }.
+             min { |lhs, rhs| lhs.length &lt;=&gt; rhs.length } || ""
+    print text.map { |line| line.gsub!(/^(#{indent})(.+)$/, "\\1#{default[:start]}\\2#{default[:end]}") || "#{indent}#{default[:start]}#{line}#{default[:end]}" }
+  end
+when "block" # apply comment around selection
+  if default[:no_indent]
+    print default[:start], text, default[:end]
+  else
+    lines = text.to_a
+    if lines.empty?
+      print default[:start], default[:end]
+    else
+      lines[-1].sub!(/^(.*)$/, "\\1#{default[:end]}")
+      print lines.shift.sub(/^(\s*)(.*)$/, "\\1#{default[:start]}\\2")
+      print *lines unless lines.empty?
+    end
+  end
+end
+</string>
+				<key>fallbackInput</key>
+				<string>line</string>
+				<key>input</key>
+				<string>selection</string>
+				<key>keyEquivalent</key>
+				<string>@/</string>
+				<key>name</key>
+				<string>Comment Selection — Source</string>
+				<key>output</key>
+				<string>replaceSelectedText</string>
+				<key>supportPath</key>
+				<string>/Library/Application Support/TextMate/Bundles/Source.tmbundle/Support</string>
+				<key>uuid</key>
+				<string>73EAE95D-A09C-4FC2-B4E3-42505678B57E</string>
+			</dict>
+			<key>command</key>
+			<string>executeCommandWithOptions:</string>
+		</dict>
+		<dict>
+			<key>argument</key>
+			<dict>
+				<key>action</key>
+				<string>replaceAll</string>
+				<key>findInProjectIgnoreCase</key>
+				<true/>
+				<key>findInProjectRegularExpression</key>
+				<false/>
+				<key>findString</key>
+				<string>(?m)\n\*/$</string>
+				<key>ignoreCase</key>
+				<true/>
+				<key>regularExpression</key>
+				<true/>
+				<key>replaceAllScope</key>
+				<string>selection</string>
+				<key>replaceString</key>
+				<string>*/\n</string>
+				<key>wrapAround</key>
+				<true/>
+			</dict>
+			<key>command</key>
+			<string>findWithOptions:</string>
+		</dict>
+	</array>
+	<key>keyEquivalent</key>
+	<string>~@/</string>
+	<key>name</key>
+	<string>Comment Selection Properly IMHO</string>
+	<key>scope</key>
+	<string>source.css, source.js</string>
+	<key>scopeType</key>
+	<string>local</string>
+	<key>uuid</key>
+	<string>57AD8845-4B0E-4B5C-B874-2994E10DC7D3</string>
+</dict>
+</plist>

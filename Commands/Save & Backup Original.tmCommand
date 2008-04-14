@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string># so we can work with relative paths
+cd "$TM_DIRECTORY"
+
+# construct a default name for the duplicate
+date_name=`date "+%m-%d-%y_%H-%M-%S"`
+new_name=`perl -pe &lt;&lt;&lt;"$TM_FILENAME" 's/^(.*?)(\.[^.]*)?$/$1 $date_name$2/'`
+
+# prompt user for a name
+CocoaDialog inputbox --text "$def_name" --button1 "Duplicate" --button2 "Cancel"|{
+
+   # if user selected 'Duplicate' and file doesn't exist
+   read res; read new_name;
+   if [[ "$res" == "1" &amp;&amp; ! -e "$new_name" ]]; then
+
+      # do the actual duplication
+      cp -p "$TM_FILENAME" "$new_name"
+
+      # force TM to refresh project drawer and open duplicate
+      { osascript -e 'tell application "SystemEvents" to activate' \
+                  -e 'tell application "TextMate" to activate'
+        open -a TextMate "$new_name"; } &amp;&gt;/dev/null &amp;
+
+   fi
+}</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>~@S</string>
+	<key>name</key>
+	<string>Save &amp; Backup Original</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>5D58F972-C3C9-422C-A9A3-A503EB42184C</string>
+</dict>
+</plist>

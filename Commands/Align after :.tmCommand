@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>export ALIGN_TO=':'
+# export ALIGN_SPACE_BEFORE='false'
+export ALIGN_SPACE_AFTER='true'
+export ALIGN_AFTER='true'
+
+"$TM_BUNDLE_SUPPORT/bin/assignment-block-tidier.rb"
+</string>
+	<key>fallbackInput</key>
+	<string>document</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^~@[</string>
+	<key>name</key>
+	<string>Align after :</string>
+	<key>output</key>
+	<string>replaceSelectedText</string>
+	<key>scope</key>
+	<string>meta.headers.blog, source.yaml</string>
+	<key>uuid</key>
+	<string>F634FBF8-A75A-4E9C-956F-C07893BDBBAD</string>
+</dict>
+</plist>

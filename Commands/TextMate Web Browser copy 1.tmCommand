@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>echo "DRAG URL INTO THIS WINDOW"
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>name</key>
+	<string>TextMate Web Browser copy 1</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>uuid</key>
+	<string>D71FC0A6-4EB9-47A2-A19A-A88FEDE3E042</string>
+</dict>
+</plist>

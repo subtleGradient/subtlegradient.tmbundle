@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>### Created by Thomas Aylott - http://subtleGradient.com
+### Enjoy
+osascript -e 'activate application "Remote Desktop Connection"' -e 'tell application "System Events" to tell process "RDC" to key code 96 -- F5 key' &amp;&gt;/dev/null &amp;
+echo "Remote Desktop Refreshing…"
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>name</key>
+	<string>Refresh MS Remote Desktop</string>
+	<key>output</key>
+	<string>discard</string>
+	<key>uuid</key>
+	<string>D970A97A-B860-4720-B1D8-692111A2DCFD</string>
+</dict>
+</plist>

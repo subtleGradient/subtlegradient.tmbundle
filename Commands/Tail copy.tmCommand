@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>. "$TM_BUNDLE_SUPPORT/lib/subtletools.sh"
+
+htmlHeader
+
+auto_clear
+tm_live_cat "/tmp/autotest.log"
+auto_resize_js 10 22
+
+htmlFooter
+</string>
+	<key>fallbackInput</key>
+	<string>document</string>
+	<key>input</key>
+	<string>none</string>
+	<key>name</key>
+	<string>Tail copy</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>uuid</key>
+	<string>A7649366-C244-4B3D-A32D-A480B044A9C7</string>
+</dict>
+</plist>
