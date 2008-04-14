@@ -21,8 +21,8 @@ def css_preview
   
   the_page = `curl --silent "#{@live_preview_url}"`
   
-  the_page.gsub!(/<base[^>]*>/,'')
-  the_page.gsub!(/<\/head>/,"<base href='#{ENV['TM_PROJECT_SITEURL']}' /></head>")
+  # the_page.gsub!(/<base[^>]*>/,'')
+  the_page.gsub!(/<\/head>/,"<base href='#{@live_preview_url}' /></head>") unless the_page =~ /<base[^>]*>/
   
   the_page.gsub!(/<link[^>]*>/,'')
   the_page.gsub!(/<style.*?\/style>/,'')
@@ -63,7 +63,7 @@ body > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :
 body > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover                         {-webkit-box-shadow:1px 1px 15px #116ee8; outline:1px solid #116ee8;}
 body > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover > :hover :hover                  {-webkit-box-shadow:1px 1px 15px #167cf0; outline:1px solid #167cf0;}
 */
-body > :active                                                                                                                                                      {-webkit-box-shadow:1px 1px 15px #167cf0; outline:1px solid #167cf0;}
+/*body > :active                                                                                                                                                      {-webkit-box-shadow:1px 1px 15px #167cf0; outline:1px solid #167cf0;}
 body > :active > :active                                                                                                                                            {-webkit-box-shadow:1px 1px 15px #116ee8; outline:1px solid #116ee8;}
 body > :active > :active > :active                                                                                                                                  {-webkit-box-shadow:1px 1px 15px #1582d8; outline:1px solid #1582d8;}
 body > :active > :active > :active > :active                                                                                                                        {-webkit-box-shadow:1px 1px 15px #00acd1; outline:1px solid #00acd1;}
@@ -79,7 +79,7 @@ body > :active > :active > :active > :active > :active > :active > :active > :ac
 body > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active                    {-webkit-box-shadow:1px 1px 15px #db9700; outline:1px solid #db9700;}
 body > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active          {-webkit-box-shadow:1px 1px 15px #e16000; outline:1px solid #e16000;}
 body > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active > :active :active  {-webkit-box-shadow:1px 1px 15px #d40000; outline:1px solid #d40000;}
-</style>
+*/</style>
 		HTML
     puts $CONTENTS
   else
