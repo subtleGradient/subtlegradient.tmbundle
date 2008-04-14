@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+require "#{ENV["TM_SUPPORT_PATH"]}/lib/escape"
+require "#{ENV["TM_SUPPORT_PATH"]}/lib/scriptmate"
+require "#{ENV["TM_SUPPORT_PATH"]}/lib/tm_parser"
+
+SEARCH_FOLDER = '/Users/taylott/Library/Application Support/TextMate/Repos'
+$last_filepath
+
+alias :htmlize_old :htmlize
+def htmlize(str)
+  return '' unless str
+  # htmlize_old(str)
+  str.gsub!(/^(\/.*):(\d+):(.*)$/) do one = $1; two = $2; three = $3
+    isthesame = ($last_filepath and $last_filepath == one)
+    
+    str = ''
+    str &lt;&lt; '&lt;/div&gt;&lt;/pre&gt;' unless isthesame
+    
+    str &lt;&lt; "\n&lt;b&gt;#{ TextMate.html_esc(one.sub(SEARCH_FOLDER,'…')) }&lt;/b&gt;\n" unless isthesame
+    str &lt;&lt; "&lt;a href='txmt://open?url=file://#{TextMate.url_esc one}"
+    str &lt;&lt; "&amp;line=#{two}" unless two.nil?
+    str &lt;&lt; "'&gt;"
+    
+    str &lt;&lt; "&lt;pre&gt;&lt;div&gt;" unless isthesame
+    
+    str &lt;&lt; "&lt;tt&gt;#{two.rjust(4)}&lt;/tt&gt;&lt;/a&gt;: "
+    str &lt;&lt; TextMate.html_esc(three || one)
+    #str &lt;&lt; "&lt;/p&gt;\n"
+    
+    $last_filepath = one
+    str || ''
+  end || ''
+end
+
+
+cmd_mate(%{fgrep -Hn -R --exclude='*.svn-base' '#{ STDIN.read }' '#{ SEARCH_FOLDER }'})
+
+=begin
+cmd_mate(%q{cat &lt;&lt;EOF
+/Users/taylott/Library/Application Support/TextMate/Repos/eBundles/Perl.tmbundle/Support/PerlMate/perlmate.rb:1:require "#{ENV["TM_SUPPORT_PATH"]}/lib/scriptmate"
+/Users/taylott/Library/Application Support/TextMate/Repos/eBundles/PHP.tmbundle/Support/lib/php_mate.rb:1:require "#{ENV["TM_SUPPORT_PATH"]}/lib/scriptmate"
+/Users/taylott/Library/Application Support/TextMate/Repos/eBundles/Ruby.tmbundle/Support/RubyMate/run_script.rb:1:require "#{ENV["TM_SUPPORT_PATH"]}/lib/scriptmate"
+/Users/taylott/Library/Application Support/TextMate/Repos/Macromates/Bundles/Groovy.tmbundle/Support/bin/groovymate.rb:3:require ENV["TM_SUPPORT_PATH"] + "/lib/scriptmate"
+EOF})
+
+# cmd_mate('ls')
+=end
+</string>
+	<key>fallbackInput</key>
+	<string>scope</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>name</key>
+	<string>Check Selection in All Bundles</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>uuid</key>
+	<string>0327A901-F512-423B-B5F9-7308AB96896A</string>
+</dict>
+</plist>

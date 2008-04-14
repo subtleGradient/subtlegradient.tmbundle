@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>saveActiveFile</string>
+	<key>command</key>
+	<string>export FRED="`date`	md5:`md5`	'txmt://open?url=file://${TM_FILEPATH// /%20}&amp;line=$TM_LINE_NUMBER&amp;column=$TM_COLUMN_NUMBER'"
+echo $FRED &gt;&gt; "${TM_PROJECT_DIRECTORY-$HOME}/.tm_savehistory.log"
+echo $FRED &gt;&gt; "$HOME/Library/Logs/tm_savehistory.log"
+echo $FRED
+</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>@s</string>
+	<key>name</key>
+	<string>SAVE &amp; Log it</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>44BF67B1-BD6F-4F86-B50D-7BE3B8403742</string>
+</dict>
+</plist>

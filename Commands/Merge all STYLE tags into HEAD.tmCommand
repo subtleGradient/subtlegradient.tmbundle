@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+data = STDIN.read
+styles = []
+
+data.gsub!(/(?:^[\ \t]+)?&lt;style.*?\/style&gt;\s*\n?/m) { |result| styles &lt;&lt; result;nil }
+
+styles = styles.join("\n")
+styles.gsub!(/&lt;\/?style[^&gt;]*?&gt;/,'')
+styles.gsub!(/^[\ \t]*/,"")
+styles.gsub!(/^/,"\t")
+styles.sub!(/\s*\Z/,"\n")
+
+
+data.sub!(/(?=&lt;\/head&gt;)/, %Q{\t&lt;style type="text/css" media="screen"&gt;\n} + styles + %Q{\t&lt;/style&gt;\n})
+
+print data
+</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>^H</string>
+	<key>name</key>
+	<string>Merge all STYLE tags into HEAD</string>
+	<key>output</key>
+	<string>replaceDocument</string>
+	<key>scope</key>
+	<string>text.html entity.name.tag.style, text.html source.css.embedded -meta.attribute-with-value.style</string>
+	<key>uuid</key>
+	<string>D8D44771-B0EC-4B08-B8ED-ECF584552CC3</string>
+</dict>
+</plist>

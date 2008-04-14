@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>commands</key>
+	<array>
+		<dict>
+			<key>command</key>
+			<string>alignJustified:</string>
+		</dict>
+	</array>
+	<key>name</key>
+	<string>Justify</string>
+	<key>uuid</key>
+	<string>A1AA05FB-D02B-4C8A-BC91-BB1882FFD80A</string>
+</dict>
+</plist>

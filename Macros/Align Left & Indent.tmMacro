@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>commands</key>
+	<array>
+		<dict>
+			<key>command</key>
+			<string>alignLeft:</string>
+		</dict>
+		<dict>
+			<key>command</key>
+			<string>indent:</string>
+		</dict>
+	</array>
+	<key>keyEquivalent</key>
+	<string>^~l</string>
+	<key>name</key>
+	<string>Align Left &amp; Indent</string>
+	<key>scopeType</key>
+	<string>local</string>
+	<key>uuid</key>
+	<string>0CEFF949-3AFD-413B-9092-9D263B3081CE</string>
+</dict>
+</plist>

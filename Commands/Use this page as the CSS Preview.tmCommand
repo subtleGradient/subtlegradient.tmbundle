@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+pth = ''+ENV['TM_FILEPATH']
+pth.gsub!(ENV['TM_PROJECT_SITEROOT'],ENV['TM_PROJECT_SITEURL'])
+
+`echo '#{pth}' &gt; /tmp/42_tm_css_live_preview_url.stupid_way_to_save_info`
+
+puts "Your '/tmp/42_tm_css_live_preview_url.stupid_way_to_save_info' is now set to"
+puts pth
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@r</string>
+	<key>name</key>
+	<string>Use this page as the CSS Preview</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>text.html</string>
+	<key>uuid</key>
+	<string>B4EFB0E8-6A4C-40D8-9CAD-7978815E6C01</string>
+</dict>
+</plist>

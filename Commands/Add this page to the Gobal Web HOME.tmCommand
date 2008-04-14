@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+pth = ''+ENV['TM_FILEPATH']
+pth.gsub!(ENV['TM_PROJECT_SITEROOT'],ENV['TM_PROJECT_SITEURL'])
+
+`echo '&lt;a href="#{pth}"&gt;#{pth}&lt;/a&gt;' &gt;&gt; ~/.url.html`
+`echo '&lt;a href="txmt://open?url=file://#{ENV['TM_FILEPATH']}"&gt;[tm]&lt;/a&gt;' &gt;&gt; ~/.url.html`
+
+puts 'Your ~/.url.html is now set to'
+puts pth
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@r</string>
+	<key>name</key>
+	<string>Add this page to the Gobal Web HOME</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>text.html</string>
+	<key>uuid</key>
+	<string>1D752FD5-A473-4D75-BF89-68F016B3AFEF</string>
+</dict>
+</plist>

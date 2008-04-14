@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+txt = STDIN.read.gsub(%r{\A/|#/\z}, '')
+txt = txt.gsub(/^[ \t]*#[ \t]*/, '')
+txt = %x{ fmt &lt;&lt;&lt; '#{txt.gsub(/'/, "'\\\\''")}' }.chomp
+txt = txt.gsub(/[$`\\]/, '\\\\\0')
+txt = txt.sub(/(\n(?=\n))?(\n*)\z/, '\1$0\2')
+print '# ' + txt.to_a.join('# ')
+</string>
+	<key>fallbackInput</key>
+	<string>scope</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^q</string>
+	<key>name</key>
+	<string>Reflow Block Comment		[#]</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>comment.line.number-sign</string>
+	<key>uuid</key>
+	<string>A7FE1CF2-CA22-4402-BDF6-C1CE56863E42</string>
+</dict>
+</plist>

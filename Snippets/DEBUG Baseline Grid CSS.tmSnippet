@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>/*DEBUG The Baseline Grid*/
+body.debug #debug000{background-image:url(http://trippledoubleyou.subtlegradient.com/tools/layoutgrid-18-12.png);position:absolute;width:100%;height:100%;top:0px;left:0px;background-position:0 10px;opacity:0.75;}
+body.debug:hover #debug000{opacity:0;z-index:-999;}
+</string>
+	<key>name</key>
+	<string>DEBUG Baseline Grid CSS</string>
+	<key>uuid</key>
+	<string>F28F7A49-43B3-44BA-A810-1001523ED48F</string>
+</dict>
+</plist>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>bundleUUID</key>
+	<string>679EFB46-5368-47E5-85BA-DEF72709A471</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+`open "txmt://open?url=file://$TM_FILEPATH"`
+
+require '~/Library/Application Support/TextMate/Bundles/TextMate.tmbundle/Support/lib/doctohtml'
+require "rubygems"
+# require 'textpow'
+require "pp"
+require ENV['TM_SUPPORT_PATH'] + '/lib/ui'
+
+module Textpow
+   class ScoreManager
+      POINT_DEPTH    = 4
+      NESTING_DEPTH  = 40
+      START_VALUE    = 2 ** ( POINT_DEPTH * NESTING_DEPTH )
+      BASE           = 2 ** POINT_DEPTH
+      
+      def initialize
+         @scores = {}
+      end
+      
+      def score search_scope, reference_scope
+         max = 0
+         search_scope.split( ',' ).each do |scope|
+            arrays = scope.split(/\B-/)
+            if arrays.size == 1
+               max = [max, score_term( arrays[0], reference_scope )].max
+            elsif arrays.size &gt; 1
+               excluded = false
+               arrays[1..-1].each do |a| 
+                  if score_term( arrays[1], reference_scope ) &gt; 0
+                     excluded = true
+                     break
+                  end
+               end
+               max = [max, score_term( arrays[0], reference_scope )].max unless excluded
+            else
+               raise ParsingError, "Error in scope string: '#{search_scope}' #{arrays.size} is not a valid number of operands" if arrays.size &lt; 1
+            end
+         end
+         max
+      end   
+      
+      private
+      
+      def score_term search_scope, reference_scope
+         unless @scores[reference_scope] &amp;&amp; @scores[reference_scope][search_scope]
+            @scores[reference_scope] ||= {}
+            @scores[reference_scope][search_scope] = score_array( search_scope.split(' '), reference_scope.split( ' ' ) )
+         end
+         @scores[reference_scope][search_scope]
+      end
+      
+      def score_array search_array, reference_array
+         pending = search_array
+         current = reference_array.last
+         reg = Regexp.new( "^#{Regexp.escape( pending.last )}" )
+         multiplier = START_VALUE
+         result = 0
+         while pending.size &gt; 0 &amp;&amp; current
+            if reg =~ current
+               point_score = (2**POINT_DEPTH) - current.count( '.' ) + Regexp.last_match[0].count( '.' )
+               result += point_score * multiplier
+               pending.pop
+               reg = Regexp.new( "^#{Regexp.escape( pending.last )}" ) if pending.size &gt; 0
+            end
+            multiplier = multiplier / BASE
+            reference_array.pop
+            current = reference_array.last
+         end
+         result = 0 if pending.size &gt; 0
+         result
+      end
+   end
+end
+
+# Load TM preferences to discover the current theme and font settings
+textmate_pref_file = '~/Library/Preferences/com.macromates.textmate.plist'
+prefs = OSX::PropertyList.load(File.open(File.expand_path(textmate_pref_file)))
+theme_uuid = prefs['OakThemeManagerSelectedTheme']
+# Load the active theme. Unfortunately, this requires us to scan through
+# all discoverable theme files...
+unless theme_plist = find_theme(theme_uuid)
+	print "Could not locate your theme file!"
+	abort
+end
+
+scorer = Textpow::ScoreManager.new
+
+scopes = ENV['TM_SCOPE'].split
+list = []
+begin
+  list.push(scopes.join(' '))
+end while scopes.pop and not scopes.empty?
+
+body_bg = '#fff'
+body_fg = '#000'
+
+font_name = prefs['OakTextViewNormalFontName'] || 'Monaco'
+font_size = (prefs['OakTextViewNormalFontSize'] || 11).to_s
+font_size.sub!(/\.\d+$/, '')
+
+FONT_MAP.each do | font_re, font_alt |
+	if (font_re.match(font_name))
+		font_name = font_alt
+		break
+	end
+end
+
+font_name = "'" + font_name + "'" if font_name.include?(' ') &amp;&amp;
+	!font_name.include?('"')
+
+contents = ''
+
+list.reverse.each do |scope|
+  best_match = {:settings =&gt; nil, :score =&gt; 0}
+
+  theme_plist['settings'].each do | setting |
+    if (!setting['name'] and setting['settings'])
+      body_bg = setting['settings']['background'] || '#ffffff'
+      body_fg = setting['settings']['foreground'] || '#000000'
+      body_bg = to_rgba(body_bg) if body_bg =~ /#.{8}/
+      body_fg = to_rgba(body_fg) if body_fg =~ /#.{8}/
+      next
+    end
+    next unless setting['name'] and setting['scope']
+
+    score = scorer.score(setting['scope'], scope)
+    if score &gt; best_match[:score]
+      best_match[:settings] = setting
+      best_match[:score]    = score
+    end
+  end
+  # p scope.split.pop
+  # p best_match
+
+  contents &lt;&lt; '&lt;div'
+  if setting = best_match[:settings]
+    contents &lt;&lt; ' style="'
+    if (color = setting['settings']['foreground'])
+      color = to_rgba(color) if color =~ /#.{8}/
+      contents &lt;&lt; "\tcolor: " + color + ";\n"
+    end
+    if (style = setting['settings']['fontStyle'])
+      contents &lt;&lt; "\tfont-style: italic;\n" if style =~ /\bitalic\b/i
+      contents &lt;&lt; "\ttext-decoration: underline;\n" if style =~ /\bunderline\b/i
+      contents &lt;&lt; "\tfont-weight: bold;\n" if style =~ /\bbold\b/i
+    end
+    if (color = setting['settings']['background'])
+      color = to_rgba(color) if color =~ /#.{8}/
+      contents &lt;&lt; "\tbackground-color: " + color + ";\n"
+    end
+    contents &lt;&lt; '"'
+  end
+  contents &lt;&lt; '&gt;' + scope.split.pop + '&lt;/div&gt;'
+end
+
+html = &lt;&lt;-HTML
+&lt;head&gt;
+&lt;style type="text/css" media="screen"&gt;
+body{padding:1em;}
+#body {
+	background: #{body_bg};
+	-webkit-border-radius: 1.5em;
+	border: 2px solid #{body_fg};
+	padding: 0.8em 0.5em;
+	font-family: #{font_name}, monospace;
+	font-size: #{font_size.to_i}px;
+	color: #{body_fg};
+	text-shadow: 1px 1px 2px #000;
+	-webkit-box-shadow: 0.2em 0.3em 2em #000;
+}
+div {
+	-webkit-border-radius: 1em;
+	line-height: 2em;
+	padding: 0 0.8em;
+/*	-webkit-box-shadow: 1px 1px 2px #000;*/
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id="body"&gt;
+#{contents}
+&lt;/div&gt;
+&lt;/body&gt;
+HTML
+
+# html = &lt;&lt;-HTML
+# &lt;style type="text/css" media="screen"&gt;
+#   body {
+#     font-family: "DejaVu Sans Mono", monospace;
+#     font-size: 12px;
+#   }
+#   span.sample {
+#     float: right;
+#     color: #F8F8F8;
+#     background-color: #141414;
+#     margin-left:5px;
+#     padding: 0 2px 0 2px;
+# font-size: 11px;
+#   }
+# &lt;/style&gt;
+# &lt;span class="sample" style="color: #FFFFFF;"&gt;sample text&lt;/span&gt;&lt;span&gt;source.ruby&lt;/span&gt;&lt;br&gt;
+# &lt;span class="sample" style="color: #8F9D6A;"&gt;sample text&lt;/span&gt;&lt;span&gt;string.quoted.double.ruby&lt;/span&gt;&lt;br&gt;
+# &lt;span class="sample" style="color: #DAEFA3;"&gt;sample text&lt;/span&gt;&lt;span&gt;source.ruby.embedded.source&lt;/span&gt;&lt;br&gt;
+# &lt;span class="sample" style="color: #E9C062;"&gt;sample text&lt;/span&gt;&lt;span&gt;string.regexp.classic.ruby&lt;/span&gt;&lt;br&gt;
+# &lt;span class="sample" style="color: #CF7D34;"&gt;sample text&lt;/span&gt;&lt;span&gt;constant.character.escape.ruby&lt;/span&gt;&lt;br&gt;
+# HTML
+
+# module TextMate
+#   module UI
+#     def self.show_tool_tip(content)
+#       IO.popen('"$DIALOG" tooltip', 'w') do |proc|
+#         proc &lt;&lt; content
+#         proc.close_write
+#       end
+#     end
+#   end
+# end
+
+TextMate::UI.tool_tip html, :format =&gt; :html, :transparent =&gt; true
+
+print html
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^~p</string>
+	<key>name</key>
+	<string>D2 Show Scope</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>uuid</key>
+	<string>99EEC281-C357-45A2-9F83-33B26D9A2977</string>
+</dict>
+</plist>

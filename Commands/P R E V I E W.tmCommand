@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>
+
+"$TM_BUNDLE_SUPPORT/bin/42_TextMate_live_preview.rb"
+</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>^~@P</string>
+	<key>name</key>
+	<string>P R E V I E W</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>text.html, source</string>
+	<key>uuid</key>
+	<string>B7406903-A74F-48C0-A5E1-31D67BA094E3</string>
+</dict>
+</plist>

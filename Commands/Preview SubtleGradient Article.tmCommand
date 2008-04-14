@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>. "$TM_SUPPORT_PATH/lib/html.sh"
+
+if [[ -z $TM_FILENAME ]]
+  then title="Textile as HTML"
+  else title="${TM_FILENAME%.*} as HTML"
+fi
+
+cat &lt;&lt;HTML
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+  &lt;base href="http://www.subtleGradient.com/" /&gt;
+  &lt;title&gt;$title&lt;/title&gt;
+  &lt;meta http-equiv="content-type" content="text/html; charset=utf-8" /&gt;
+  &lt;link href="/stylesheets/theme/subtletheme.css" media="screen" rel="Stylesheet" type="text/css" /&gt;
+  &lt;link href="/stylesheets/theme/local.css" media="screen" rel="Stylesheet" type="text/css" /&gt;
+  &lt;link href="/stylesheets/theme/subtletheme_print.css" media="print" rel="Stylesheet" type="text/css" /&gt;
+  &lt;script src="/javascripts/cookies.js" type="text/javascript"&gt;
+  &lt;/script&gt;
+  &lt;script src="/javascripts/prototype.js" type="text/javascript"&gt;
+  &lt;/script&gt;
+  &lt;script src="/javascripts/effects.js" type="text/javascript"&gt;
+  &lt;/script&gt;
+  &lt;script src="/javascripts/typo.js" type="text/javascript"&gt;
+  &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id="container" class="clearfix"&gt;
+    &lt;div id="header"&gt;
+      &lt;div id="logo"&gt;
+        &lt;h1 id="sitename"&gt;&lt;a href="/"&gt;subtleGradient&lt;/a&gt;&lt;/h1&gt;
+        &lt;h2 id="subtitle"&gt;Chock full of bloggy goodness&lt;/h2&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div id="search"&gt;
+      &lt;span class="toplinks"&gt;&lt;a href="/xml/rss/feed.xml" title="subtleGradient RSS 2.0 feed"&gt;&lt;img alt="RSS" src="/images/theme/rss.gif" /&gt;&lt;/a&gt; &lt;a href="#sidebar"&gt;menu&lt;/a&gt;&lt;/span&gt;
+      &lt;form action="/articles/search" id="sform" method="get" name="sform"&gt;
+        &lt;label for="q"&gt;Search&lt;/label&gt;&lt;input type="text" id="q" name="q" value="" size="15" /&gt; &lt;img alt="Spinner" id="search_spinner" src="/images/theme/spinner.gif" style="display:none;" name="search_spinner" /&gt;
+      &lt;/form&gt;
+      &lt;div id="search-results"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div id="content" class="clearfix"&gt;
+      &lt;div id="main"&gt;
+        &lt;!--
+          &lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+          xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/"
+          xmlns:dc="http://purl.org/dc/elements/1.1/"&gt;
+          &lt;rdf:Description
+          rdf:about=""
+          trackback:ping="http://subtlegradient.com/articles/trackback/29"
+          dc:title="Growl Notifications for iCal (How-To)"
+          dc:identifier="http://subtlegradient.com/articles/read/29"
+          dc:description="I love iCal, but I really hate the &amp;lt;a href=&amp;quot;http://images.apple.com/lae/ical/images/index_alarm12312002.jpg&amp;quot; title=&amp;quot;This thing has it's place but not"
+          dc:creator="admin"
+          dc:date="2006-10-09T20:38:58-07:00" /&gt;
+        &lt;/rdf:RDF&gt;
+      --&gt;
+      &lt;div class="post"&gt;
+        &lt;div class="content"&gt;
+          &lt;h2 class="postTitle"&gt;$title&lt;/h2&gt;
+          &lt;p class="auth"&gt;by Thomas Aylott &lt;span class="typo_date" title="Fri, 21 Jul 2006 17:10:00 GMT"&gt;Fri, 21 Jul 2006 17:10:00 GMT&lt;/span&gt;&lt;/p&gt;
+HTML
+
+"$TM_SUPPORT_PATH/bin/Textile.rb"
+
+cat &lt;&lt;HTML
+
+        &lt;/div&gt;
+        &lt;p class="meta"&gt;&lt;a href="http://subtlegradient.com/xml/articlerss/29/feed.xml" title="RSS Feed" class="rss-link"&gt;RSS feed for this post&lt;/a&gt; |&lt;a href="http://subtlegradient.com/articles/trackback/29" title="http://subtlegradient.com/articles/trackback/29"&gt;Trackback from your site&lt;/a&gt; |&lt;a href="#respond"&gt;Add your comment&lt;/a&gt;&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div id="commentBlock"&gt;
+        &lt;a name="comments" id="comments"&gt;&lt;/a&gt;
+        &lt;div id="comment_box"&gt;
+          &lt;form action="/articles/comment/29" class="commentform" id="commentform" method="post" onsubmit="new Ajax.Updater({success:'commentList'}, '/articles/comment/29', {asynchronous:true, evalScripts:true, insertion:Insertion.Bottom, onComplete:function(request){complete(request)}, onFailure:function(request){failure(request)}, onLoading:function(request){loading()}, parameters:Form.serialize(this)}); return false;" name="commentform"&gt;
+            &lt;div id="comment_loading" style="display:none;"&gt;
+              &lt;ul class="comment-list"&gt;
+                &lt;li class="comment"&gt;
+                  &lt;div class="content"&gt;
+                    &lt;img alt="Spinner" src="/images/theme/spinner.gif" /&gt;
+                  &lt;/div&gt;
+                  &lt;div class="cite"&gt;
+                    &lt;cite&gt;&lt;strong&gt;You&lt;/strong&gt; Just now&lt;/cite&gt;
+                  &lt;/div&gt;
+                &lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/div&gt;
+            &lt;ul class="comment-list"&gt;
+              &lt;li class="comment"&gt;
+                &lt;div class="content"&gt;
+                  &lt;a name="respond" class="anchor" id="respond"&gt;&lt;/a&gt; 
+                  &lt;textarea cols="55" id="comment_body" name="comment[body]" rows="10"&gt;
+                  &lt;/textarea&gt;
+                  &lt;div id="errors"&gt;&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class="cite"&gt;
+                  &lt;cite&gt;&lt;strong&gt;&lt;label for="comment_author"&gt;Name&lt;/label&gt;&lt;input id="comment_author" name="comment[author]" size="20" type="text" /&gt;&lt;/strong&gt;&lt;br /&gt;
+                    &lt;label for="comment_url"&gt;Website&lt;/label&gt;&lt;input id="comment_url" name="comment[url]" size="20" type="text" /&gt;&lt;br /&gt;
+                    &lt;label for="comment_email"&gt;Email&lt;/label&gt;&lt;input id="comment_email" name="comment[email]" size="20" type="text" /&gt;&lt;/cite&gt;&lt;br /&gt;
+                    &lt;input type="submit" name="submit" id="form-submit-button" value="submit" class="button" /&gt;
+                  &lt;/div&gt;
+                &lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/form&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;script type="text/javascript"&gt;
+        //&lt;![CDATA[
+        show_dates_as_local_time()
+        //]]&gt;
+        &lt;/script&gt;
+      &lt;/div&gt;
+      &lt;div id="sidebar"&gt;
+        &lt;div id="side_search" class="sidebar-node"&gt;
+          &lt;!-- Yeah, i know this should be a partial --&gt;
+          &lt;form action="/articles/search" id="sform1" method="get" name="sform1"&gt;
+            &lt;h3&gt;&lt;label for="q"&gt;Search&lt;/label&gt;&lt;input type="text" id="q_bottom" name="q" value="" size="15" /&gt;&lt;img alt="Spinner" id="search_spinner1" src="/images/theme/spinner.gif" style="display:none;" name="search_spinner1" /&gt;&lt;/h3&gt;
+          &lt;/form&gt;&lt;script type="text/javascript"&gt;
+          //&lt;![CDATA[
+          new Form.Element.Observer('q_bottom', 1, function(element, value) {new Ajax.Updater('search-results1', '/live/search', {asynchronous:true, evalScripts:true, onComplete:function(request){Element.hide('search_spinner1')}, onLoading:function(request){Element.show('search_spinner1')}, parameters:'q=' + escape($F('q_bottom'))})})
+          //]]&gt;
+          &lt;/script&gt; &lt;!-- /Yeah, i know this should be a partial --&gt;
+          &lt;div id="search-results1"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="sidebar-node"&gt;
+          &lt;h3&gt;Categories&lt;/h3&gt;
+          &lt;ul id="categories"&gt;
+            &lt;li&gt;&lt;a href="/articles/category/applescript"&gt;AppleScript&lt;/a&gt; &lt;em&gt;(1)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/category/bookmarklet"&gt;Bookmarklet&lt;/a&gt; &lt;em&gt;(1)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/category/code"&gt;Code&lt;/a&gt; &lt;em&gt;(2)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/category/css"&gt;CSS&lt;/a&gt; &lt;em&gt;(1)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/category/design"&gt;Design&lt;/a&gt; &lt;em&gt;(2)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/category/dreamhost"&gt;Dreamhost&lt;/a&gt; &lt;em&gt;(3)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/category/growl"&gt;Growl&lt;/a&gt; &lt;em&gt;(1)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/category/javascript"&gt;Javascript&lt;/a&gt; &lt;em&gt;(1)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/category/mac-os-x"&gt;Mac OS X&lt;/a&gt; &lt;em&gt;(4)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/category/ruby-on-rails"&gt;Ruby on Rails&lt;/a&gt; &lt;em&gt;(7)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/category/screencast"&gt;Screencast&lt;/a&gt; &lt;em&gt;(3)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/category/sillyness"&gt;Sillyness&lt;/a&gt; &lt;em&gt;(2)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/category/textmate"&gt;TextMate&lt;/a&gt; &lt;em&gt;(10)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/category/theme"&gt;Theme&lt;/a&gt; &lt;em&gt;(9)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/category/tip"&gt;Tip&lt;/a&gt; &lt;em&gt;(7)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/category/typo"&gt;Typo&lt;/a&gt; &lt;em&gt;(7)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/category/work"&gt;Work&lt;/a&gt; &lt;em&gt;(1)&lt;/em&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;div class="sidebar-node"&gt;
+          &lt;h3&gt;Archives&lt;/h3&gt;
+          &lt;ul id="archives"&gt;
+            &lt;li&gt;&lt;a href="/articles/2007/03"&gt;March 2007&lt;/a&gt; &lt;em&gt;(2)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/2006/11"&gt;November 2006&lt;/a&gt; &lt;em&gt;(2)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/2006/10"&gt;October 2006&lt;/a&gt; &lt;em&gt;(2)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/2006/08"&gt;August 2006&lt;/a&gt; &lt;em&gt;(1)&lt;/em&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/articles/2006/07/21"&gt;July 2006&lt;/a&gt; &lt;em&gt;(1)&lt;/em&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;div class="sidebar-node"&gt;
+          &lt;h3&gt;Links&lt;/h3&gt;
+          &lt;ul&gt;
+            &lt;li&gt;Silliness
+              &lt;ul&gt;
+                &lt;li&gt;&lt;a href="http://ebabystuff.net"&gt;eBabyStuff&lt;/a&gt;&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/li&gt;
+            &lt;li&gt;Friends
+              &lt;ul&gt;
+                &lt;li&gt;&lt;a href="http://www.design42.com/"&gt;Carla Sikorski&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="http://likealightbulb.com/"&gt;John Butler&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="http://www.karstconservancy.org/"&gt;Bill Walker’s Karst Conservancy&lt;/a&gt;&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;div class="sidebar-node"&gt;&lt;/div&gt;&lt;br style="clear: both;" /&gt;
+        &lt;div class="sidebar-node"&gt;&lt;/div&gt;&lt;br style="clear: both;" /&gt;
+        &lt;div class="sidebar-node"&gt; &lt;h3&gt;Google&lt;/h3&gt; &lt;/div&gt;
+        &lt;div class="sidebar-node"&gt;&lt;/div&gt;&lt;br style="clear: both;" /&gt;
+        &lt;div&gt;
+          &lt;script type="text/javascript" src="http://cetrk.com/pages/scripts/0000/0269.js"&gt;
+          &lt;/script&gt; &lt;script src="http://clicky.roxr.net/367-8bd7866bc5ab" type="text/javascript"&gt;
+          &lt;/script&gt; &lt;noscript&gt;&lt;img height="0" width="0" src="http://clicky.roxr.net/367-8bd7866bc5ab/ns" /&gt;&lt;/noscript&gt;
+        &lt;/div&gt;&lt;br clear="all" /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div id="footer"&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="http://typo.leetsoft.com/" class="powered"&gt;&lt;img alt="Powered" src="/images/powered.gif" /&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="http://validator.w3.org/check?uri=referer" title="Validate the XHTML of this page with the W3C"&gt;Valid XHTML 1.0&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="http://jigsaw.w3.org/css-validator/validator?uri=http://subtlegradient.com/" title="Validate the CSS of this page with the W3C"&gt;Valid CSS&lt;/a&gt;&lt;/li&gt;
+        &lt;li id="taylott"&gt;&lt;cite&gt;theme by &lt;a href="http://subtlegradient.com/articles/2005/11/26/subtletheme" title="SubtleTheme Typo Theme Announcement Page"&gt;Thomas Aylott&lt;/a&gt; of &lt;a href="http://design42.com/"&gt;design42&lt;/a&gt;&lt;/cite&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+HTML
+</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>^~@p</string>
+	<key>name</key>
+	<string>Preview SubtleGradient Article</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>text.html.textile</string>
+	<key>uuid</key>
+	<string>3B8EF8DB-20B7-4995-9319-201F9459FC1E</string>
+</dict>
+</plist>

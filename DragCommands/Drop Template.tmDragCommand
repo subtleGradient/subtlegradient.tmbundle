@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+drop = {
+	:file =&gt; ENV['TM_DROPPED_FILE'],
+	:path =&gt; ENV['TM_DROPPED_FILEPATH'],
+	:opts =&gt; ENV['TM_MODIFIER_FLAGS'].split('|'),
+}
+
+drop[:width], drop[:height] = `sips -g pixelWidth -g pixelHeight "/Users/taylott/Projects/Digerata/Java.com/Build/Java Templates/images/jv0hph.jpg"`.scan(/(?:Width|Height): (\d+)/).flatten
+
+p drop
+</string>
+	<key>draggedFileExtensions</key>
+	<array>
+		<string>png</string>
+		<string>jpg</string>
+		<string>jpeg</string>
+		<string>gif</string>
+	</array>
+	<key>input</key>
+	<string>selection</string>
+	<key>name</key>
+	<string>Drop Template</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>never</string>
+	<key>uuid</key>
+	<string>D9494027-60C6-45BB-90F6-D2ED798D10F8</string>
+</dict>
+</plist>

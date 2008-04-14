@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleUUID</key>
+	<string>4676FC6D-6227-11D9-BFB1-000D93589AF6</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+text=`mdls -name kMDItemLayerNames "$TM_DROPPED_FILE"`
+print text.gsub(/kMDItemLayerNames\s*=\s*\(\n/,'').gsub(/^\)\s*/,'').gsub(/",?$/,'&lt;/p&gt;').gsub(/^\s*"/,'&lt;p&gt;')
+</string>
+	<key>draggedFileExtensions</key>
+	<array>
+		<string>psd</string>
+	</array>
+	<key>name</key>
+	<string>Insert PSD Layer Names</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>text.html</string>
+	<key>uuid</key>
+	<string>14C02951-842C-4E83-B1F8-16278F4C11A0</string>
+</dict>
+</plist>

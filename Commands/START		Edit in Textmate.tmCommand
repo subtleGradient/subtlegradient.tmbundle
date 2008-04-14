@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>cat&gt;/tmp/textmate_edit_in_place.textmateEdit
+open -a 'textmate' /tmp/textmate_edit_in_place.textmateEdit</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^@e</string>
+	<key>name</key>
+	<string>START		Edit in Textmate</string>
+	<key>output</key>
+	<string>discard</string>
+	<key>uuid</key>
+	<string>34012752-4DED-441A-BF88-728D583BE5C4</string>
+</dict>
+</plist>

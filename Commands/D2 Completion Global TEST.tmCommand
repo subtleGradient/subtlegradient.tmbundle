@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+require ENV['TM_SUPPORT_PATH'] + '/lib/ui'
+require ENV['TM_SUPPORT_PATH'] + '/lib/current_word'
+
+
+def completeit!
+	extra_chars = []
+	@choices    = []
+	# @choices  = [ {'image' =&gt; '', 'display' =&gt; '', 'match' =&gt; '', 'insert' =&gt; ''}, ]
+	
+	return TextMate::UI.tool_tip('Nothing to Complete') unless ENV['TM_COMPLETIONS']
+	#TextMate::UI.tool_tip("TM_COMPLETIONS: \n" + ENV['TM_COMPLETIONS'])
+	
+	ENV['TM_COMPLETIONS'].split(ENV['TM_COMPLETION_split']||",").map do |c|
+		next unless c
+		next if c =~ /^--/;
+		# @choices &lt;&lt; {'image' =&gt; 'c', 'display' =&gt; c, 'match' =&gt; c, 'insert' =&gt; '$0'}
+		@choices &lt;&lt; {'display' =&gt; c}
+		extra_chars += c.scan(/[^a-z]/i)
+		extra_chars.uniq!
+	end
+	
+	extra_chars = Regexp.escape extra_chars.uniq.join('')
+	currentword = Word.current_word extra_chars+"a-zA-Z0-9", :left
+	
+	# TextMate::UI.tool_tip("extra_chars: \n" + extra_chars.inspect)
+	# TextMate::UI.tool_tip("currentword: \n"+currentword.inspect)
+	
+	TextMate::UI.complete(@choices, {:currentword=&gt;currentword, :case_insensitive=&gt;true, :extra_chars =&gt; extra_chars})
+	
+	#TextMate::UI.tool_tip("@choices: \n"+@choices.inspect)
+end
+
+if ENV['TM_FILEPATH'] == $0
+	ENV['TM_COMPLETIONS'] ||= 'ad,adipisicing,aliqua,aliquip,amet,anim,aute,cillum,commodo,consectetur,consequat,culpa,cupidatat,deserunt,do,dolor,dolore,Duis,ea,eiusmod,elit,enim,esse,est,et,eu,ex,Excepteur,exercitation,fugiat,id,in,incididunt,ipsum,irure,labore,laboris,laborum,Lorem,magna,minim,mollit,nisi,non,nostrud,nulla,occaecat,officia,pariatur,proident,qui,quis,reprehenderit,sed,sint,sit,sunt,tempor,ullamco,Ut,ut,velit,veniam,voluptate,'
+	
+  puts 'Testing'
+  
+  `open "txmt://open?url=file://$TM_FILEPATH"` #For testing purposes, make this document the topmost so that the complete popup works
+  
+  fred = &lt;&lt;-CSS
+  .section:hover {
+    
+  }
+  CSS
+end
+
+completeit!
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string></string>
+	<key>name</key>
+	<string>D2 Completion Global TEST</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>uuid</key>
+	<string>F7AE8F87-271C-4DCA-A2B9-7FD814C7B3DB</string>
+</dict>
+</plist>

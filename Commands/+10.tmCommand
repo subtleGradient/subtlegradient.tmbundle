@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+DEFAULT_SIZE = 10
+
+def add_some(txt)
+  txt.gsub!(/(\d+)/) do |s|
+    $1.to_i + DEFAULT_SIZE
+  end
+  # "${0:#{e_snp(txt)}}"
+  txt
+end
+def e_snp(str)
+	str.to_s.gsub(/(?=[$`\\}])/, '\\')
+end
+
+# Do it!
+print add_some(STDIN.read)
+
+# Test it!
+=begin
+require "test/unit"
+class TestAddSome &lt; Test::Unit::TestCase
+  def test_selection
+    assert_equal %{  margin-bottom: 12/17px;
+      padding-bottom: 4em;
+      padding-bottom: 4px;
+      padding-bottom: 2/7px;
+      padding-bottom: 4/17px;
+      padding-top: 5/17px;}, 
+      add_some(%{  margin-bottom: 11/16px;
+      padding-bottom: 3em;
+      padding-bottom: 3px;
+      padding-bottom: 1/6px;
+      padding-bottom: 3/16px;
+      padding-top: 4/16px;})
+  end
+  def test_line
+    assert_equal "      margin-bottom: 12/17px;",  add_some("      margin-bottom: 11/16px;")
+    assert_equal "      padding-bottom: 4em;"   ,  add_some("      padding-bottom: 3em;"   )
+    assert_equal "      padding-bottom: 4px;"   ,  add_some("      padding-bottom: 3px;"   )
+    assert_equal "      padding-bottom: 2/7px;" ,  add_some("      padding-bottom: 1/6px;" )
+    assert_equal "      padding-bottom: 4/17px;",  add_some("      padding-bottom: 3/16px;")
+    assert_equal "      padding-top: 5/17px;"   ,  add_some("      padding-top: 4/16px;"   )
+  end
+  def test_no_break_snippet
+    assert_equal ' ${1: something } ', add_some(' ${0: something } ')
+  end
+end
+=begin
+=end
+# &gt;&gt; Loaded suite -
+# &gt;&gt; Started
+# &gt;&gt; ...
+# &gt;&gt; Finished in 0.000762 seconds.
+# &gt;&gt; 
+# &gt;&gt; 3 tests, 8 assertions, 0 failures, 0 errors
+</string>
+	<key>fallbackInput</key>
+	<string>character</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>#^~$+</string>
+	<key>name</key>
+	<string>+10</string>
+	<key>output</key>
+	<string>replaceSelectedText</string>
+	<key>uuid</key>
+	<string>13B62383-B246-4925-87A0-4D8CA4B23535</string>
+</dict>
+</plist>
