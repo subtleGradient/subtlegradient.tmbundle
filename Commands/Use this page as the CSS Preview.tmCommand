@@ -6,8 +6,10 @@
 	<string>nop</string>
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
-pth = ''+ENV['TM_FILEPATH']
-pth.gsub!(ENV['TM_PROJECT_SITEROOT'],ENV['TM_PROJECT_SITEURL'])
+require ENV['TM_SUPPORT_PATH'] + '/lib/escape'
+
+pth = ''+e_url(ENV['TM_FILEPATH'])
+pth.gsub!(e_url(ENV['TM_PROJECT_SITEROOT']),ENV['TM_PROJECT_SITEURL'])
 
 `echo '#{pth}' &gt; /tmp/42_tm_css_live_preview_url.stupid_way_to_save_info`
 
