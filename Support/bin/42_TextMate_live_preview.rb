@@ -104,9 +104,11 @@ def render_normal
   puts $CONTENTS
 end
 
-def textile
-  require "redcloth"
-  puts(RedCloth.new($CONTENTS).to_html(:textile))
+def bluecloth
+  require "bluecloth"
+  puts '<link rel="stylesheet" href="http://tripledoubleyou.subtlegradient.com/c/blueprint/screen.css" type="text/css" media="screen" charset="utf-8" />'
+  puts '<style>body{padding:1em}</style>'
+  puts(BlueCloth.new($CONTENTS).to_html)
 end
 
 def previewstyle
@@ -134,10 +136,10 @@ def textmate_preview_goto_file_marker_onclick(line_number)
   return %{document.location="txmt://open?url=file://#{(ENV['TM_FILEPATH']||'').gsub(' ','%20')}&line=#{line_number||ENV['TM_LINE_NUMBER']}&column=9999999"}
 end
 
-def mark_down
-  ENV['preview_contents'] = $CONTENTS
-  puts `echo "$preview_contents"|Markdown.pl`
-end
+# def mark_down
+#   ENV['preview_contents'] = $CONTENTS
+#   puts `echo "$preview_contents"|Markdown.pl`
+# end
 
 def live_diff
   preview_file = (ENV['PREVIEW_FILE'] = "/tmp/preview_#{ENV['TM_FILENAME']}")
@@ -321,9 +323,9 @@ def init
   when /^\s*text\.html\.ruby/i
     rails_view
   when /^\s*text\.(html|blog)\.textile/i
-    textile
+    bluecloth
   when /^\s*text\.html\.markdown/i
-    mark_down
+    bluecloth
   when /^\s*source\.css/i
     css_preview
   when /^\s*text\.html/i
