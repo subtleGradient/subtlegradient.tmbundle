@@ -8,7 +8,7 @@
 	<string>679EFB46-5368-47E5-85BA-DEF72709A471</string>
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
-`open "txmt://open?url=file://$TM_FILEPATH"`
+#`open "txmt://open?url=file://$TM_FILEPATH"`
 
 require '~/Library/Application Support/TextMate/Bundles/TextMate.tmbundle/Support/lib/doctohtml'
 require "rubygems"
@@ -226,19 +226,20 @@ HTML
 #   end
 # end
 
-TextMate::UI.tool_tip html, :format =&gt; :html, :transparent =&gt; true
+#TextMate::UI.tool_tip html, :format =&gt; :html, :transparent =&gt; true
 
-print html
+print html #if $DIALOG =~ /2$/
+#exit_output_html
 </string>
 	<key>input</key>
 	<string>none</string>
 	<key>keyEquivalent</key>
 	<string>^~p</string>
 	<key>name</key>
-	<string>D2 Show Scope</string>
+	<string>D2 Show Scope Window</string>
 	<key>output</key>
 	<string>showAsHTML</string>
 	<key>uuid</key>
-	<string>99EEC281-C357-45A2-9F83-33B26D9A2977</string>
+	<string>CD939B18-12F5-47E4-9D45-DB0682C2BFCA</string>
 </dict>
 </plist>

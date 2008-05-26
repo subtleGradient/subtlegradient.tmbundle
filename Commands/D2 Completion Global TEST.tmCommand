@@ -21,8 +21,18 @@ def completeit!
 	ENV['TM_COMPLETIONS'].split(ENV['TM_COMPLETION_split']||",").map do |c|
 		next unless c
 		next if c =~ /^--/;
+		
 		# @choices &lt;&lt; {'image' =&gt; 'c', 'display' =&gt; c, 'match' =&gt; c, 'insert' =&gt; '$0'}
-		@choices &lt;&lt; {'display' =&gt; c}
+    defaultInsert = '$0'
+    defaultInsert = ': $0;' if ENV['TM_SCOPE'] =~ /css/
+    defaultInsert = '' if ENV['TM_SCOPE'] =~ /meta\.property-value\.css/
+    image = ''
+    image = 'function' if c =~ /\(/
+    image = 'class' if c =~ /^\./
+    image = 'id' if c =~ /^\#/
+		
+    @choices &lt;&lt; {'display' =&gt; c, 'insert' =&gt; defaultInsert, 'image' =&gt; image}
+    # @choices &lt;&lt; {'display' =&gt; c}
 		extra_chars += c.scan(/[^a-z]/i)
 		extra_chars.uniq!
 	end
@@ -33,13 +43,25 @@ def completeit!
 	# TextMate::UI.tool_tip("extra_chars: \n" + extra_chars.inspect)
 	# TextMate::UI.tool_tip("currentword: \n"+currentword.inspect)
 	
-	TextMate::UI.complete(@choices, {:currentword=&gt;currentword, :case_insensitive=&gt;true, :extra_chars =&gt; extra_chars})
+	@images = {
+	  'function' =&gt; '/Developer/Applications/Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/CodeAssistantFunction.tiff',
+	  'class' =&gt; '/Developer/Applications/Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/CodeAssistantClass.tiff',
+	  'id' =&gt; '/Developer/Applications/Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/CodeAssistantMacro.tiff'
+	}
+	TextMate::UI.complete(@choices, {:currentword=&gt;currentword, :case_insensitive=&gt;true, :extra_chars =&gt; extra_chars, :images =&gt; @images}) # do |choice|
+	 #    return nil unless choice
+	 #    
+	 #    #Show the tool_tip before inserting the snippet to make it align to the end of the match
+	 #    TextMate::UI.tool_tip(choice['tool_tip']) if choice['tool_tip']
+	 #    
+	 #    choice['insert']
+	 #  end
 	
 	#TextMate::UI.tool_tip("@choices: \n"+@choices.inspect)
 end
 
 if ENV['TM_FILEPATH'] == $0
-	ENV['TM_COMPLETIONS'] ||= 'ad,adipisicing,aliqua,aliquip,amet,anim,aute,cillum,commodo,consectetur,consequat,culpa,cupidatat,deserunt,do,dolor,dolore,Duis,ea,eiusmod,elit,enim,esse,est,et,eu,ex,Excepteur,exercitation,fugiat,id,in,incididunt,ipsum,irure,labore,laboris,laborum,Lorem,magna,minim,mollit,nisi,non,nostrud,nulla,occaecat,officia,pariatur,proident,qui,quis,reprehenderit,sed,sint,sit,sunt,tempor,ullamco,Ut,ut,velit,veniam,voluptate,'
+	ENV['TM_COMPLETIONS'] ||= 'ad(),adipisicing,aliqua,aliquip,amet,anim,aute,cillum,commodo,consectetur,consequat,culpa,cupidatat,deserunt,do,dolor,dolore,Duis,ea,eiusmod,elit,enim,esse,est,et,eu,ex,Excepteur,exercitation,fugiat,id,in,incididunt,ipsum,irure,labore,laboris,laborum,Lorem,magna,minim,mollit,nisi,non,nostrud,nulla,occaecat,officia,pariatur,proident,qui,quis,reprehenderit,sed,sint,sit,sunt,tempor,ullamco,Ut,ut,velit,veniam,voluptate,'
 	
   puts 'Testing'
   

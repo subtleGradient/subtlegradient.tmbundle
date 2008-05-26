@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>deleted</key>
+	<array>
+		<string>CADEBAF0-7B0F-43B5-9E0F-9FF23AF2522F</string>
+		<string>99EEC281-C357-45A2-9F83-33B26D9A2977</string>
+		<string>44BF67B1-BD6F-4F86-B50D-7BE3B8403742</string>
+		<string>C6600DFC-49D0-469B-BCD8-62741EEFD47B</string>
+		<string>9EFCF11D-1FF4-4CB6-8780-FE8E1959FBDA</string>
+	</array>
 	<key>mainMenu</key>
 	<dict>
 		<key>items</key>
@@ -118,6 +126,7 @@
 	<string> subtleGradient</string>
 	<key>ordering</key>
 	<array>
+		<string>6075462F-E70F-4807-B42C-42AE47FEAFDC</string>
 		<string>1625EC42-91A6-4D30-B2C6-4EDB9CB5E2D6</string>
 		<string>60BCB823-BF46-420B-8572-360A8542E705</string>
 		<string>3F0B344F-3982-4A30-870E-527DC2C2B5A5</string>
@@ -142,8 +151,6 @@
 		<string>E5075058-63B0-4F03-AE44-0E0870698253</string>
 		<string>C3055F04-4BA8-495E-BCB3-DFAD57E68EEE</string>
 		<string>9E3812EF-8B3B-432D-976F-015B30A86D63</string>
-		<string>9EFCF11D-1FF4-4CB6-8780-FE8E1959FBDA</string>
-		<string>C6600DFC-49D0-469B-BCD8-62741EEFD47B</string>
 		<string>21E65A05-8567-47C3-AB49-D606F5214117</string>
 		<string>A7649366-C244-4B3D-A32D-A480B044A9C7</string>
 		<string>934C4D1C-4B80-4876-8D6A-AE9AF02B6143</string>
@@ -186,8 +193,7 @@
 		<string>D8D44771-B0EC-4B08-B8ED-ECF584552CC3</string>
 		<string>F7AE8F87-271C-4DCA-A2B9-7FD814C7B3DB</string>
 		<string>03E509EC-FFB4-4653-A73C-2898C3D2C0A8</string>
-		<string>99EEC281-C357-45A2-9F83-33B26D9A2977</string>
-		<string>CADEBAF0-7B0F-43B5-9E0F-9FF23AF2522F</string>
+		<string>CD939B18-12F5-47E4-9D45-DB0682C2BFCA</string>
 		<string>B7406903-A74F-48C0-A5E1-31D67BA094E3</string>
 		<string>F8537692-946C-4EC9-A2DF-3CA6990190E2</string>
 		<string>83B35A5B-7C3C-4460-9BA1-694E346080A0</string>
@@ -213,7 +219,6 @@
 		<string>D427FC0C-EF9D-4B94-93F1-64B04553B7C5</string>
 		<string>14C02951-842C-4E83-B1F8-16278F4C11A0</string>
 		<string>AF2CA0E8-11E2-4EBD-B281-64FCE3F199D2</string>
-		<string>44BF67B1-BD6F-4F86-B50D-7BE3B8403742</string>
 		<string>3B8EF8DB-20B7-4995-9319-201F9459FC1E</string>
 		<string>275F97A6-533B-4353-88E4-511FB1DB025F</string>
 		<string>1D752FD5-A473-4D75-BF89-68F016B3AFEF</string>

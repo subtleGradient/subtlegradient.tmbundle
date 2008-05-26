@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+# DOC = DATA.read
+DOC = STDIN.read
+
+tags = DOC.scan(/&lt;(\b[a-z]+\b)[^&gt;]*&gt;/mi).flatten
+
+print '   Tags: ' + tags.length.to_s + ' '
+# puts tags.join(' ').upcase
+
+puts '     Tag Types: ' + tags.uniq.length.to_s + ' '
+puts '"' + tags.sort.uniq.join('", "').upcase + '"' + "\n\n"
+
+classes = DOC.scan(/class="(.*?)"/i).map{|c|c.to_s.split}.flatten
+
+print 'Classes: ' + classes.length.to_s + ' '
+# puts classes.join(' ')
+
+puts 'Unique Classes: ' + classes.uniq.length.to_s + ' '
+puts '"' + classes.sort.uniq.join('", "') + '"' + "\n\n"
+
+
+ids = DOC.scan(/id="(.*?)"/i).map{|c|c.to_s.split}.flatten
+
+print 'IDs: ' + ids.length.to_s + ' '
+# puts ids.join(' ')
+
+puts 'Unique IDs: ' + ids.uniq.length.to_s + ' '
+puts '"' + ids.sort.uniq.join('", "') + '"' + "\n\n"
+
+
+urls = DOC.scan(/href="(.*?)"/i).map{|c|c.to_s.split}.flatten
+
+print 'URLs: ' + urls.length.to_s + ' '
+# puts urls.join(' ')
+
+puts 'Unique URLs: ' + urls.uniq.length.to_s + ' '
+puts urls.sort.uniq.join("\n") + "\n\n"
+
+
+srcs = DOC.scan(/src="(.*?)"/i).map{|c|c.to_s.split}.flatten
+
+print 'SRCs: ' + srcs.length.to_s + ' '
+# puts srcs.join(' ')
+
+puts 'Unique SRCs: ' + srcs.uniq.length.to_s + ' '
+puts srcs.sort.uniq.join("\n")
+
+__END__
+&lt;div class="jvmt0 jvmt0v0"&gt;
+	&lt;a href="#"            &gt;&lt;u&gt;&lt;img width="270" height="150" src="/images/jia/nyoung2008_thumb1.jpg" alt="Relive historical moments                    " /&gt;&lt;/u&gt;&lt;span&gt;Relive historical moments                     &lt;/span&gt;&lt;/a&gt;
+	&lt;a href="#" class="alt"&gt;&lt;u&gt;&lt;img width="270" height="150" src="/images/jia/nyoung2008_thumb2.jpg" alt="Explore an interactive timeline              " /&gt;&lt;/u&gt;&lt;span&gt;Explore an interactive timeline               &lt;/span&gt;&lt;/a&gt;
+	&lt;a href="#"            &gt;&lt;u&gt;&lt;img width="270" height="150" src="/images/jia/nyoung2008_thumb3.jpg" alt="Play from an extensive music library         " /&gt;&lt;/u&gt;&lt;span&gt;Play from an extensive music library          &lt;/span&gt;&lt;/a&gt;
+	&lt;a href="#" class="alt"&gt;&lt;u&gt;&lt;img width="270" height="150" src="/images/jia/nyoung2008_thumb4.jpg" alt="Browse from a collection of photos and videos" /&gt;&lt;/u&gt;&lt;span&gt;Browse from a collection of photos and videos &lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^N</string>
+	<key>name</key>
+	<string>Count Tags in Document / Selection</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>text.html</string>
+	<key>uuid</key>
+	<string>C2A2079F-6596-4BCC-8764-ABB86D03683C</string>
+</dict>
+</plist>

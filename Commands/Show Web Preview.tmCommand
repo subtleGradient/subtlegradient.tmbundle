@@ -69,7 +69,7 @@ menu_click({"TextMate", "Window", "Show Web Preview"})
 	<key>output</key>
 	<string>discard</string>
 	<key>scope</key>
-	<string>text.html.textile, text.html.markdown, source, source.css, source.js</string>
+	<string>text.html.textile, text.html.markdown, source, source.js</string>
 	<key>uuid</key>
 	<string>C9CA5346-CE6D-4162-92ED-91D1B8F94E27</string>
 </dict>
