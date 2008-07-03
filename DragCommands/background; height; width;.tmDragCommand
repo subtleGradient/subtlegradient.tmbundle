@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+begin
+
+def capture_number
+  $capture_number ||= 0
+  $capture_number += 1
+end
+def cap(txt='')
+  "${#{capture_number}:#{e_snp txt}}"
+end
+
+require ENV['TM_SUPPORT_PATH'] + '/lib/escape'
+
+OPTION  = 'OPTION'
+SHIFT   = 'SHIFT'
+CONTROL = 'CONTROL'
+COMMAND = 'COMMAND'
+
+DROP = {
+  :relative_path =&gt; ENV['TM_DROPPED_FILE'],
+  :path =&gt; ENV['TM_DROPPED_FILEPATH'],
+  :opts =&gt;(ENV['TM_MODIFIER_FLAGS']||'').split('|').sort,
+}
+
+DROP[:width], DROP[:height] = `sips -g pixelWidth -g pixelHeight "#{DROP[:path]}"`.scan(/(?:Width|Height): (\d+)/).flatten
+DROP[:width ] = DROP[:width ].to_i
+DROP[:height] = DROP[:height].to_i
+
+DROP[:basename] = DROP[:relative_path].gsub(/^.*\//,'').gsub(/\..*$/,'')
+DROP[:extension] = DROP[:relative_path].scan(/\.[^\.]*$/).first
+
+class String
+  def to_css_class
+    self.gsub(/^[^a-z]+/i,'')
+  end
+  def to_alt
+    self.gsub(/[-_](\w)/){' ' + $1.upcase}.gsub(/^(\w)/){$1.upcase}
+  end
+end
+def png_fix(selector='$10')
+  return '' unless DROP[:extension] == '.png'
+  %"\n* html #{selector}{
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='${#{selector =~ /:hover/ ? 15 : 14}:#{DROP[:relative_path]}}', sizingMethod='${16:crop}');
+\\}"
+end
+
+SNIPPETS = {
+  [] =&gt; &lt;&lt;-snippet,
+${100:${10:.#{DROP[:basename].to_css_class}} {
+	background: url('#{DROP[:relative_path]}') no-repeat top left;
+	height:#{DROP[:height]}px;
+	width:#{DROP[:width]}px;
+\\}#{png_fix}
+}
+  snippet
+  
+  # [OPTION] =&gt; &lt;&lt;-snippet,
+  # ${100:${10:.#{DROP[:basename].to_css_class}}{background: url('#{DROP[:relative_path]}') no-repeat top left; height: #{DROP[:height]}px; width:  #{DROP[:width]}px; display: block; overflow: hidden;\\}#{png_fix}}
+  # snippet
+}
+
+# css = { cap('.'+DROP[:basename].to_css_class) =&gt; {
+#     :background =&gt; "url('#{DROP[:relative_path]}') no-repeat top left",
+#     :height =&gt; [DROP[:height], 'px'],
+#     :width  =&gt; [DROP[:width ], 'px'],
+#   }#.map{|k,v| " #{k}: #{v};"}
+# }#.map{|k,v| "#{k}{#{v}}"}
+# 
+# print cap,cap(css)
+
+# css = "${100:#{e_snp css}}"
+
+# print css
+
+print SNIPPETS[DROP[:opts]] || SNIPPETS.keys.inspect
+
+rescue Exception =&gt; e
+  puts e
+  puts e.backtrace
+end
+</string>
+	<key>draggedFileExtensions</key>
+	<array>
+		<string>png</string>
+		<string>jpg</string>
+		<string>jpeg</string>
+		<string>gif</string>
+		<string>svg</string>
+	</array>
+	<key>input</key>
+	<string>selection</string>
+	<key>name</key>
+	<string>background; height; width;</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>source.css -meta.scope.property-list.css</string>
+	<key>uuid</key>
+	<string>C2137730-37C7-44F3-8CB6-631D7AD96F4E</string>
+</dict>
+</plist>

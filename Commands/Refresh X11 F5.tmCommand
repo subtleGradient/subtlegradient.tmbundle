@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>### Created by Thomas Aylott - http://subtleGradient.com
+### Enjoy
+osascript -e 'activate application "X11"' -e 'tell application "System Events" to key code 96 -- F5 key' -e 'delay 1' &amp;&gt;/dev/null &amp;
+echo "Sending F5 to X11…"
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@r</string>
+	<key>name</key>
+	<string>X11 Refresh with F5</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>text.html, source.css</string>
+	<key>uuid</key>
+	<string>C7912C8C-9DEA-433A-9007-DBE5710351EE</string>
+</dict>
+</plist>

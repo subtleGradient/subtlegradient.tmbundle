@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>commands</key>
+	<array>
+		<dict>
+			<key>command</key>
+			<string>selectHardLine:</string>
+		</dict>
+		<dict>
+			<key>argument</key>
+			<dict>
+				<key>action</key>
+				<string>replaceAll</string>
+				<key>findInProjectIgnoreCase</key>
+				<false/>
+				<key>findInProjectRegularExpression</key>
+				<false/>
+				<key>findString</key>
+				<string>^[\ \t]*$</string>
+				<key>ignoreCase</key>
+				<false/>
+				<key>regularExpression</key>
+				<true/>
+				<key>replaceAllScope</key>
+				<string>selection</string>
+				<key>replaceString</key>
+				<string>$0†å∫</string>
+				<key>wrapAround</key>
+				<true/>
+			</dict>
+			<key>command</key>
+			<string>findWithOptions:</string>
+		</dict>
+		<dict>
+			<key>command</key>
+			<string>indent:</string>
+		</dict>
+		<dict>
+			<key>argument</key>
+			<dict>
+				<key>action</key>
+				<string>replaceAll</string>
+				<key>findInProjectIgnoreCase</key>
+				<false/>
+				<key>findInProjectRegularExpression</key>
+				<false/>
+				<key>findString</key>
+				<string>†å∫</string>
+				<key>ignoreCase</key>
+				<false/>
+				<key>regularExpression</key>
+				<true/>
+				<key>replaceAllScope</key>
+				<string>selection</string>
+				<key>wrapAround</key>
+				<true/>
+			</dict>
+			<key>command</key>
+			<string>findWithOptions:</string>
+		</dict>
+	</array>
+	<key>keyEquivalent</key>
+	<string>~@[</string>
+	<key>name</key>
+	<string>Smart Indent</string>
+	<key>uuid</key>
+	<string>3F45B2D4-FC42-4282-8FD5-8A74223AFCBC</string>
+</dict>
+</plist>
