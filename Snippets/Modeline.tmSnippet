@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>$TM_COMMENT_START-*- Mode: ${10:$TM_MODE};${20: tab-width: ${21:$TM_TAB_SIZE};}${30:`if [[ "$TM_SOFT_TABS" = "YES" ]]; then echo ' indent-tabs-mode: nil;'; fi`} -*-$TM_COMMENT_END</string>
+	<key>name</key>
+	<string>Modeline</string>
+	<key>tabTrigger</key>
+	<string>mode</string>
+	<key>uuid</key>
+	<string>393D06C0-7D5B-4F1B-8179-F56C040621E4</string>
+</dict>
+</plist>
