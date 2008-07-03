@@ -34,7 +34,7 @@
 	<string>(?x)
 		(   (^|;) \s*+ end   \s*+ ([#].*)? $
 		|   (^|;) \s*+ end \. .* $
-		|   ^     \s*+ [}\]] \s*+ ([#;].*)? $
+		|   ^     \s*+ [}\]] \s*+ ([#;,].*)? $
 		|   [#] .*? \(end\) \s*+ $    # Sune’s special marker
 		|   ^=end
 		)</string>
@@ -141,7 +141,7 @@
 			<key>applyEndPatternLast</key>
 			<integer>1</integer>
 			<key>begin</key>
-			<string>(^|(?&lt;=[\{\(]))(?=\s*[a-zA-Z][a-zA-Z0-9_!?]+(?=\s+(?!([\]\)\}\=\+\-\*\/\^\$\,]|&lt;\s|&lt;&lt;\s))))</string>
+			<string>(^|(?&lt;=[\{\(]))(?=\s*[a-zA-Z][a-zA-Z0-9_!?]+(?=\s+(?!\s*([\]\)\}\=\+\-\*\/\^\,\|]|&lt;\s|&lt;&lt;\s))))</string>
 			<key>captures</key>
 			<dict>
 				<key>0</key>
@@ -174,7 +174,7 @@
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>[a-zA-Z][a-zA-Z0-9_!?]+(?=\{|\s+(?!([\]\)\}\=\+\-\*\/\^\$\,]|&lt;\s|&lt;&lt;\s)))</string>
+					<string>[a-zA-Z][a-zA-Z0-9_!?]+(?=\{|\s+(?!\s*([\]\)\}\=\+\-\*\/\^\,\|]|&lt;\s|&lt;&lt;\s)))</string>
 					<key>name</key>
 					<string>meta.function-call.ruby</string>
 				</dict>
@@ -231,13 +231,17 @@
 		</dict>
 		<dict>
 			<key>include</key>
+			<string>#leading-space</string>
+		</dict>
+		<dict>
+			<key>include</key>
 			<string>#source_ruby</string>
 		</dict>
 		<dict>
 			<key>comment</key>
 			<string>This is kindof experimental. There really is no way to perfectly match all regular variables, but you can pretty well assume that any normal word in certain curcumstances that havnt already been scoped as something else are probably variables, and the advantages beat the potential errors</string>
 			<key>match</key>
-			<string>((?&lt;=\W)\b|^)\w+\b(?=\s*([\]\)\}\=\+\-\*\/\^\$\,]|&lt;\s|&lt;&lt;\s))</string>
+			<string>((?&lt;=\W)\b|^)\w+\b(?=\s*([\]\)\}\=\+\-\*\/\^\$\,\|]|&lt;\s|&lt;&lt;\s|#|if|unless))</string>
 			<key>name</key>
 			<string>variable.other.ruby</string>
 		</dict>
@@ -252,10 +256,6 @@
 			<string>(?&lt;=,|\s)[a-z][a-zA-Z0-9_]*\s*$</string>
 			<key>name</key>
 			<string>variable.other.ruby</string>
-		</dict>
-		<dict>
-			<key>include</key>
-			<string>#leading-space</string>
 		</dict>
 	</array>
 	<key>repository</key>
