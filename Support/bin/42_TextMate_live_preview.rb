@@ -9,6 +9,7 @@
 # subtleGradient
 # 
 
+require "CGI"
 BlueprintScreenCSS = <<-HTML #(fold)
 <style>
 /* -----------------------------------------------------------------------
@@ -57,7 +58,7 @@ abbr, acronym {border-bottom:1px dotted #666;}
 address {margin:0 0 1.5em;font-style:italic;}
 del {color:#666;}
 pre, code {margin:1.5em 0;white-space:pre;}
-pre, code, tt {font:1em 'andale mono', 'lucida console', monospace;line-height:1.5;}
+pre, code, tt {font:1em "Bitstream Vera Sans Mono", "Monaco", monospace;line-height:1.5;}
 li ul, li ol {margin:0 1.5em;}
 ul, ol {margin:0 1.5em 1.5em 1.5em;}
 ul {list-style-type:disc;}
@@ -343,6 +344,13 @@ def bluecloth
   puts(BlueCloth.new($CONTENTS).to_html)
 end
 
+def redcloth
+  require "redcloth"
+  puts BlueprintScreenCSS
+  puts '<style>body{padding:1em}</style>'
+  puts(RedCloth.new($CONTENTS).to_html)
+end
+
 def previewstyle
   return <<-HTML
 <style>
@@ -378,46 +386,58 @@ def live_diff
   File.open(preview_file,'w') { |file|
     file << $CONTENTS
   }
+  puts BlueprintScreenCSS
   puts <<-HTML
   <style type="text/css" media="screen">
-  * {
-    margin: 0;
-    padding: 0;
-  }
   body {
-    padding:10px;
+    margin:1em;
   }
   </style>
   
   HTML
-  puts "<h1 title='by thomas Aylott / subtleGradient'>Live Preview (<i>diff mode</i>)</h1><pre style='font: 10px \"Lucida Grande\", \"Trebuchet MS\", Verdana, sans-serif;'>"
-  # require "CGI"
+  puts "<h1>Live diff</h1>"
   # puts CGI::escapeHTML(`echo -n "$preview_contents"|diff -u "$TM_FILEPATH" -`)
-  puts diff_to_html('diff -u "$TM_FILEPATH" "$PREVIEW_FILE"')
+  puts diff_to_html
+  # puts diff_to_html('diff -u "$TM_FILEPATH" "$PREVIEW_FILE"')
 end
 
-def diff_to_html(command)
+def diff_to_html(command=nil)
   html = <<-HTML
   <style>
+  body{background:#eee;}
+  pre{padding-left:3em; background:#fff; border: 1px solid #fff;border-bottom:1px solid #ddd;}
+  pre:empty {border:none;}
   pre a { text-decoration: none; overflow: hidden; display: block; width: 100%; white-space: nowrap;}
   pre a:hover {background: transparent;}
 
-             pre a {color: #000;}
+             pre a {color: #ccc;}
+             pre:hover a {color: #333;}
   .bright    pre a {color: #333;}
   .shiny     pre a,
   .dark      pre a {color: #eee;}
   .halloween pre a {color: #eee;}
 
              pre a.added,
-  .bright    pre a.added {color: #00401E;   background: #40FF9A;}
+  .bright    pre a.added {color: #00401E;   background: #E5FEF1;}
   .shiny     pre a.added,                   
   .dark      pre a.added,                   
   .halloween pre a.added {color: #40FF9A;   background: #00401E;}
              pre a.removed,                 
-  .bright    pre a.removed {color: #400021; background: #FF40A3;}
+  .bright    pre a.removed {color: #400021; background: #FFE5F2;}
   .shiny     pre a.removed,                 
   .dark      pre a.removed,                 
   .halloween pre a.removed {color: #FF40A3; background: #400021;}
+
+             pre:hover a.added,
+  .bright    pre:hover a.added {color: #00401E;   background: #40FF9A;}
+  .shiny     pre:hover a.added,                   
+  .dark      pre:hover a.added,                   
+  .halloween pre:hover a.added {color: #40FF9A;   background: #00401E;}
+             pre:hover a.removed,                 
+  .bright    pre:hover a.removed {color: #400021; background: #FF40A3;}
+  .shiny     pre:hover a.removed,                 
+  .dark      pre:hover a.removed,                 
+  .halloween pre:hover a.removed {color: #FF40A3; background: #400021;}
 
              pre a:hover.added,
   .bright    pre a:hover.added {background: #00401E;   color: #40FF9A;}
@@ -430,56 +450,91 @@ def diff_to_html(command)
   .dark      pre a:hover.removed,                      
   .halloween pre a:hover.removed {background: #FF40A3; color: #400021;}
 
-  pre {white-space: normal !important;}
-  pre a span { position: absolute; margin-left: -3em; width: 2.75em; padding-top: 0.4em; color: #999; font-size: 70%; display: block; float: left; text-align: right; }
+/*  pre {white-space: normal !important;}*/
+  pre a span { position: absolute; margin-left: -3em; width: 2.75em; padding-top: 0.4em; color: #ccc; font-size: 9px; display: block; float: left; text-align: right; }
+  pre a:hover span {color:#000;}
+  
   </style>
   HTML
 
   svn = ENV['TM_SVN'] || 'svn'
+  git = ENV['TM_GIT'] || 'git'
 
-  files = ENV['TM_SELECTED_FILES']
+  filepath = ENV['TM_FILEPATH']
   html << <<-HTML
   <!--
-    Selected files 
-    #{files}
+    Selected filepath 
+    #{filepath}
   -->
   HTML
-
-  command = "#{svn} diff --diff-cmd /usr/bin/diff -x -U0 #{files}" unless command
-  html << "<!-- `#{command}` -->"
-  lines = `#{command}`.split("\n")
-
-  line_number = 0
-  filepath = ENV['TM_FILEPATH']
-  difflines = []
-
-  lines.each do |l|
-    l.match(/@@.*?\+(\d+).*? @@/)
-    line_number = $1.to_i-1 if $1
-
-    l.match(/\+{3} (.*?)\s+\(.*?\)$/)
-    filepath = $1 if $1
-
-    status = status_map(l[0])
-    difflines.push(DiffLine.new(line_number, l, filepath, status)) if l.match(/^(\+|-)/) unless l.match(/^(\+|-){3}/)
-
-    line_number = line_number +1 unless l.match(/^-/)
+  
+  commands = [nil,command]
+  
+  commands << ['Diff Unsaved Changes','diff -u "$TM_FILEPATH" "$PREVIEW_FILE"']
+  
+  if svn?(filepath)
+    commands << ["'Subversion Diff with BASE'","#{svn} diff --diff-cmd /usr/bin/diff -x -U0 '#{filepath}'"]
   end
-
-  filepath = ''
-  difflines.each_with_index do |d,i|
-    html << '</pre>' if i > 0 and d.filepath != filepath
-    html << "<h3>#{d.filepath.gsub(/\b\//,'&#8203;/')}</h3><pre>" if d.filepath != filepath
-    filepath = d.filepath
-    html << d.link
+  if git?(filepath)
+    commands << ['Git Diff',"cd '#{File.dirname filepath}'; #{git} diff '#{filepath}'"]
   end
-  html << '</pre>'
+  
+  commands.each do |commandset|
+    next unless commandset
+    command = commandset.last
+    diff_type = commandset.first
+    
+    html << "<!-- `#{command}` -->\n"
+    html << "<h2>#{diff_type}</h2>\n"
+    lines = `#{command} 2>&1`.split("\n")
+    
+    line_number = 0
+    filepath = ENV['TM_FILEPATH']
+    difflines = []
+    
+    lines.each do |l|
+      l.match(/@@.*?\+(\d+).*? @@/)
+      line_number = $1.to_i-1 if $1
+      
+      l.match(/\+{3} (.*?)\s+\(.*?\)$/)
+      filepath = $1 if $1
+      
+      status = status_map(l[0])
+      difflines.push(DiffLine.new(line_number, l, filepath, status))
+      
+      line_number = line_number +1 unless l.match(/^-/)
+      
+    end
+    
+    filepath = ''
+    html << "<pre>"
+    blocks||=1
+    difflines.each_with_index do |d,i|
+      if d.filepath != filepath
+        html << "</pre>\n"# if i > 0
+        html << "<h3>#{d.filepath.sub(ENV['HOME'],'~').gsub(/\b\//,'&#8203;/')}</h3>\n"
+        html << "<pre>"
+      end
+      filepath = d.filepath
+      html << "</pre> <h4>Block #{blocks += 1}</h4> <pre>" if d.link.match(/@@.*?@@/)
+      html << d.link
+    end
+    html << "</pre>\n<hr />"
+  end
   
   return html
 end
 
+def git?(path)
+  `cd '#{File.dirname(path)}'; git status 2>&1`
+end
+
+def svn?(path)
+  false
+end
+
 def run_javascript
-puts %{<script src="#{ENV['TM_SUPPORT_PATH']}/script/prototype.js" type="text/javascript"></script>} if ENV['TM_SCOPE'] =~ /prototype/
+  # puts %{<script src="#{ENV['TM_SUPPORT_PATH']}/script/prototype.js" type="text/javascript"></script>} if ENV['TM_SCOPE'] =~ /prototype/
   puts <<-HTML
 <script type="text/javascript" charset="utf-8">
 try{
@@ -522,7 +577,6 @@ class DiffLine
     %{<a class="#{status}" href="txmt://open?url=file:///#{filepath}&amp;line=#{line_number}"><span>#{line_number}</span> #{hcode}</a>}
   end
   def hcode
-    require "CGI"
     CGI::escapeHTML(self.code).gsub(' ','&nbsp;')
   end
 end
@@ -544,6 +598,40 @@ def rails_view(file_name = ENV['TM_FILENAME'])
     puts "<h1>Error :P</h1>\n<br/>\nTry saving the file. Unless it's already saved, then email me about it <a href='mailto:oblivious@subtlegradient.com'>Thomas Aylott</a>"
 end
 
+def check_syntax_ruby
+  filepath='/tmp/run_ruby.rb'
+  File.open(filepath,'w'){|file| file.write($CONTENTS) }
+  
+  ok = `ruby -c '#{filepath}' 2>&1`
+  ok.gsub!('Syntax OK','<h1>Syntax OK</h1>')
+  ok.gsub!(/#{Regexp.escape filepath}:(\d+):(.*)/m)do|match|
+    line    = $1
+    context = $2
+    
+    result = ''
+    result << '<h1>Syntax Not OK :\'(</h1>'
+    result << '<pre>'
+    result << '<a href="'
+    result << "txmt://open?url=file://#{ENV['TM_FILEPATH'].gsub(' ','%20').gsub(ENV['HOME'],'~')}&line=#{line}&column=#{ENV['TM_COLUMN_NUMBER']}"
+    result << '" class="removed" style="white-space:inherit;padding:1em">'
+    result << CGI::escapeHTML(context)
+    result << '</a>'
+    result << '</pre>'
+    result
+  end
+  print ok
+end
+
+def run_ruby
+  filepath='/tmp/run_ruby.rb'
+  File.open(filepath,'w'){|file| file.write($CONTENTS) }
+  
+  print '<pre>'
+  ok = system(%`ruby -c '#{filepath}'`)
+  print `ruby '#{filepath}'` if ok
+  print '</pre>'
+end
+
 def init
   #INPUT SETUP
   $CONTENTS = ""; $stdin.each_line() { |line| $CONTENTS << line }
@@ -555,7 +643,7 @@ def init
   when /^\s*text\.html\.ruby/i
     rails_view
   when /^\s*text\.(html|blog)\.textile/i
-    bluecloth
+    redcloth
   when /^\s*text\.html\.markdown/i
     bluecloth
   when /^\s*source\.css/i
@@ -564,6 +652,10 @@ def init
     set_base
   when /^\s*(source\.js)/i
     run_javascript
+  when /source\.ruby/
+    check_syntax_ruby
+    # run_ruby if ENV['WEB_PREVIEW_RUBY']=='run'
+    live_diff
   when /^\s*(source|text\.xml)/i
     live_diff
   else
