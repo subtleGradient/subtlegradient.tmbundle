@@ -8,13 +8,16 @@
 	<string>#!/usr/bin/env ruby
 require ENV['TM_SUPPORT_PATH'] + '/lib/escape'
 
-pth = ''+e_url(ENV['TM_FILEPATH'])
-pth.gsub!(e_url(ENV['TM_PROJECT_SITEROOT']),ENV['TM_PROJECT_SITEURL'])
+abort "Save this file and then try again." unless ENV['TM_FILEPATH']
+# abort "You need to set the values of TM_PROJECT_SITEROOT and TM_PROJECT_SITEURL to match a filesystem path to a url." unless ENV['TM_PROJECT_SITEROOT'] and ENV['TM_PROJECT_SITEURL']
+
+pth = ''+e_url(ENV['TM_FILEPATH']||'')
+url = e_url( ENV['TM_PROJECT_SITEROOT'] ) if ENV['TM_PROJECT_SITEROOT']
+pth.gsub!(url||/^/,ENV['TM_PROJECT_SITEURL']||'file://')
 
 `echo '#{pth}' &gt; /tmp/42_tm_css_live_preview_url.stupid_way_to_save_info`
 
-puts "Your '/tmp/42_tm_css_live_preview_url.stupid_way_to_save_info' is now set to"
-puts pth
+puts "Your CSS Preview url is now set to", pth
 </string>
 	<key>input</key>
 	<string>none</string>
