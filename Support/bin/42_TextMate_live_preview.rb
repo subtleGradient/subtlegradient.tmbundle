@@ -473,7 +473,7 @@ def diff_to_html(command=nil)
   commands << ['Diff Unsaved Changes','diff -u "$TM_FILEPATH" "$PREVIEW_FILE"']
   
   if svn?(filepath)
-    commands << ["'Subversion Diff with BASE'","#{svn} diff --diff-cmd /usr/bin/diff -x -U0 '#{filepath}'"]
+    commands << ["Subversion Diff with BASE","#{svn} diff --diff-cmd /usr/bin/diff -x -U0 '#{filepath}'"]
   end
   if git?(filepath)
     commands << ['Git Diff',"cd '#{File.dirname filepath}'; #{git} diff '#{filepath}'"]
@@ -526,16 +526,17 @@ def diff_to_html(command=nil)
 end
 
 def git?(path)
-  `cd '#{File.dirname(path)}'; git status 2>&1`
+  File.exists?(File.dirname(path) + '/.git')
 end
 
 def svn?(path)
-  false
+  File.exists?(File.dirname(path) + '/.svn')
 end
 
 def run_javascript
   # puts %{<script src="#{ENV['TM_SUPPORT_PATH']}/script/prototype.js" type="text/javascript"></script>} if ENV['TM_SCOPE'] =~ /prototype/
   puts <<-HTML
+<pre>
 <script type="text/javascript" charset="utf-8">
 try{
 //YOUR STUFF//
@@ -549,6 +550,7 @@ try{
 //YOUR STUFF//
 }catch(e){ document.write(e) };
 </script>
+</pre>
 HTML
 end
 

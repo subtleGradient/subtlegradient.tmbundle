@@ -5,7 +5,7 @@
 	<key>content</key>
 	<string>$TM_COMMENT_START-*- Mode: ${10:$TM_MODE};${20: tab-width: ${21:$TM_TAB_SIZE};}${30:`if [[ "$TM_SOFT_TABS" = "YES" ]]; then echo ' indent-tabs-mode: nil;'; fi`} -*-$TM_COMMENT_END</string>
 	<key>name</key>
-	<string>Modeline</string>
+	<string>Insert Modeline</string>
 	<key>tabTrigger</key>
 	<string>mode</string>
 	<key>uuid</key>

@@ -18,7 +18,7 @@ end tell
 	<key>keyEquivalent</key>
 	<string>^~@p</string>
 	<key>name</key>
-	<string>Show Web Preview</string>
+	<string>Show Web Preview Window</string>
 	<key>output</key>
 	<string>discard</string>
 	<key>scope</key>

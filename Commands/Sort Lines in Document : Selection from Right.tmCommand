@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+class String
+  def reverse_sort
+    # return self.split("\n").map{|row| row.ljust(5000) }.join("\n").reverse.sort().join("").gsub(/^[\ \t]+/,'').reverse#.sub(/\A\n/,'')
+    return self.sort do|a,b|
+      a.rstrip.reverse &lt;=&gt; b.rstrip.reverse
+    end.join
+  end
+end
+
+print STDIN.read.reverse_sort
+</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string></string>
+	<key>name</key>
+	<string>Sort Lines from the Right</string>
+	<key>output</key>
+	<string>replaceSelectedText</string>
+	<key>uuid</key>
+	<string>261B3EF9-5E75-41F8-A733-48C2A1C53D5B</string>
+</dict>
+</plist>

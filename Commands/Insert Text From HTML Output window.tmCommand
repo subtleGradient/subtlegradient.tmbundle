@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>beforeRunningCommand</key>
@@ -59,7 +59,7 @@ EOF
 	<key>input</key>
 	<string>none</string>
 	<key>name</key>
-	<string>Insert Text From HTML Output window</string>
+	<string>GUI to Insert Text From HTML Output window</string>
 	<key>output</key>
 	<string>showAsHTML</string>
 	<key>uuid</key>

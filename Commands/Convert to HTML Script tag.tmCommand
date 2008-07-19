@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+require ENV['TM_SUPPORT_PATH'] + '/lib/escape'
+
+puts &lt;&lt;-HTML
+&lt;!-- -*- Mode: HTML; -*- --&gt;
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
+&lt;html&gt;
+&lt;head&gt;
+	&lt;meta http-equiv="Content-type" content="text/html; charset=utf-8" /&gt;
+	&lt;title&gt;${1:#{e_snp ENV['TM_FILENAME']}}&lt;/title&gt;
+${2:	&lt;link rel="stylesheet" href="${10:http://tripledoubleyou.subtlegradient.com/c/blueprint/}screen.css" type="text/css" media="screen" charset="utf-8" /&gt;
+	&lt;link rel="stylesheet" href="${10:http://tripledoubleyou.subtlegradient.com/c/blueprint/}print.css" type="text/css" media="print" charset="utf-8" /&gt;
+	&lt;!--[if IE]&gt;&lt;link rel="stylesheet" href="${10:http://tripledoubleyou.subtlegradient.com/c/blueprint/}ie.css" type="text/css" media="screen" charset="utf-8" /&gt;&lt;![endif]--&gt;
+}&lt;/head&gt;
+&lt;body&gt;
+$0
+&lt;script type="text/javascript" charset="utf-8"&gt;
+
+#{e_sn STDIN.read.sub(/\A\s+/m,'').sub(/\s+\Z/m,'')}
+
+&lt;/script&gt;
+${3:&lt;!--[if gte IE 6]&gt;&lt;!--&gt;&lt;script src="${20:http://tripledoubleyou.subtlegradient.com/j/}mootools-trunk.js" type="text/javascript" charset="utf-8"&gt;&lt;/script&gt;&lt;!-- &lt;![endif]--&gt;
+}&lt;/body&gt;
+&lt;/html&gt;
+HTML
+</string>
+	<key>fallbackInput</key>
+	<string>scope</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^H</string>
+	<key>name</key>
+	<string>Convert to HTML Script tag</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>source.js - text.html</string>
+	<key>uuid</key>
+	<string>BFA10BBE-6043-41CE-9629-B3A3B59C3A2C</string>
+</dict>
+</plist>
