@@ -5,19 +5,17 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>echo "Quitting TextMate via the shortcut ⌘Q" 
-echo "has been disabled by the subtleGradient bundle."
-echo "Use the TextMate menu"
+	<string>#!/usr/bin/env ruby
+data = STDIN.read
+print "'", data.sub(/^\s+/,'').split(/\s*\n\s*/).join("',\n'"), "'", data.match(/\n\Z/)||''
 </string>
 	<key>input</key>
-	<string>none</string>
-	<key>keyEquivalent</key>
-	<string>@q</string>
+	<string>selection</string>
 	<key>name</key>
-	<string>No QUIT!</string>
+	<string>Convert Lines to Array Items</string>
 	<key>output</key>
-	<string>showAsTooltip</string>
+	<string>replaceSelectedText</string>
 	<key>uuid</key>
-	<string>AF2CA0E8-11E2-4EBD-B281-64FCE3F199D2</string>
+	<string>E69093C6-B78F-41A1-A304-7D1C0C614045</string>
 </dict>
 </plist>

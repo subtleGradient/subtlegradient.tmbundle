@@ -536,6 +536,21 @@ end
 def run_javascript
   # puts %{<script src="#{ENV['TM_SUPPORT_PATH']}/script/prototype.js" type="text/javascript"></script>} if ENV['TM_SCOPE'] =~ /prototype/
   puts <<-HTML
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>Testing MooTools Code</title>
+</head>
+<body>
+	HTML
+  puts <<-HTML if ENV['TM_SCOPE'] =~ /mootools/
+<script type="text/javascript">
+#{File.read(File.dirname(__FILE__)+"/../js/mootools.js")}
+</script>
+HTML
+  puts <<-HTML
 <pre>
 <script type="text/javascript" charset="utf-8">
 try{
@@ -552,6 +567,10 @@ try{
 </script>
 </pre>
 HTML
+  puts <<-HTML
+</body>
+</html>
+	HTML
 end
 
 
@@ -656,7 +675,7 @@ def init
     run_javascript
   when /source\.ruby/
     check_syntax_ruby
-    # run_ruby if ENV['WEB_PREVIEW_RUBY']=='run'
+    run_ruby if ENV['WEB_PREVIEW_RUBY']=='run'
     live_diff
   when /^\s*(source|text\.xml)/i
     live_diff
