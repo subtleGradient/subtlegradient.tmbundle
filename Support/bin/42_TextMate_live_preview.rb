@@ -644,12 +644,14 @@ def check_syntax_ruby
 end
 
 def run_ruby
+  return false unless ENV['WEB_PREVIEW_RUBY']=='run'
+  
   filepath='/tmp/run_ruby.rb'
   File.open(filepath,'w'){|file| file.write($CONTENTS) }
   
   print '<pre>'
   ok = system(%`ruby -c '#{filepath}'`)
-  print `ruby '#{filepath}'` if ok
+  print `ruby '#{filepath}'`.gsub('&','&amp;').gsub('<','&lt;') if ok
   print '</pre>'
 end
 
@@ -675,7 +677,7 @@ def init
     run_javascript
   when /source\.ruby/
     check_syntax_ruby
-    run_ruby if ENV['WEB_PREVIEW_RUBY']=='run'
+    run_ruby
     live_diff
   when /^\s*(source|text\.xml)/i
     live_diff
