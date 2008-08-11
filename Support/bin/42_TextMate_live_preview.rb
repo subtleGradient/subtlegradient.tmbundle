@@ -472,10 +472,10 @@ def diff_to_html(command=nil)
   
   commands << ['Diff Unsaved Changes','diff -u "$TM_FILEPATH" "$PREVIEW_FILE"']
   
-  if svn?(filepath)
+  if svn?(ENV['TM_PROJECT_DIRECTORY'] || filepath)
     commands << ["Subversion Diff with BASE","#{svn} diff --diff-cmd /usr/bin/diff -x -U0 '#{filepath}'"]
   end
-  if git?(filepath)
+  if git?(ENV['TM_PROJECT_DIRECTORY'] || filepath)
     commands << ['Git Diff',"cd '#{File.dirname filepath}'; #{git} diff '#{filepath}'"]
   end
   
@@ -506,7 +506,7 @@ def diff_to_html(command=nil)
       
     end
     
-    filepath = ''
+    # filepath = ''
     html << "<pre>"
     blocks||=1
     difflines.each_with_index do |d,i|
@@ -526,10 +526,12 @@ def diff_to_html(command=nil)
 end
 
 def git?(path)
+  return File.exists?(path + '/.git') if File.directory? path
   File.exists?(File.dirname(path) + '/.git')
 end
 
 def svn?(path)
+  return File.exists?(path + '/.svn') if File.directory? path
   File.exists?(File.dirname(path) + '/.svn')
 end
 
