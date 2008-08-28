@@ -342,6 +342,7 @@
 	<string> subtleGradient</string>
 	<key>ordering</key>
 	<array>
+		<string>93C57002-422B-4693-BE73-79C5C2016E7A</string>
 		<string>BFA10BBE-6043-41CE-9629-B3A3B59C3A2C</string>
 		<string>1FF09E1A-CE96-4B55-9D02-6B3EA750C903</string>
 		<string>3F45B2D4-FC42-4282-8FD5-8A74223AFCBC</string>
@@ -463,6 +464,7 @@
 		<string>0D04CADD-BEF5-4B89-90A8-1CA0B3766332</string>
 		<string>E69093C6-B78F-41A1-A304-7D1C0C614045</string>
 		<string>168AC018-81E3-4E53-AF5E-F819723B21DA</string>
+		<string>94053FBE-FA26-470C-A91D-A19BE266545D</string>
 	</array>
 	<key>uuid</key>
 	<string>3752EFF8-5401-46A5-AF20-07087E3933B2</string>

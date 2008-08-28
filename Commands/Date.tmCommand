@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+print Time.new
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>name</key>
+	<string>Date</string>
+	<key>output</key>
+	<string>afterSelectedText</string>
+	<key>tabTrigger</key>
+	<string>date</string>
+	<key>uuid</key>
+	<string>94053FBE-FA26-470C-A91D-A19BE266545D</string>
+</dict>
+</plist>

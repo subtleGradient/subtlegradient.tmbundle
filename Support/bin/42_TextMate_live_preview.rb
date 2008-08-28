@@ -8,7 +8,7 @@
 # Thomas Aylott
 # subtleGradient
 # 
-
+ENV['TM_TEST'] = 'true'
 require "CGI"
 BlueprintScreenCSS = <<-HTML #(fold)
 <style>
@@ -632,7 +632,7 @@ def check_syntax_ruby
     context = $2
     
     result = ''
-    result << '<h1>Syntax Not OK :\'(</h1>'
+    result << '<h1>Syntax Not OK :’(</h1>'
     result << '<pre>'
     result << '<a href="'
     result << "txmt://open?url=file://#{ENV['TM_FILEPATH'].gsub(' ','%20').gsub(ENV['HOME'],'~')}&line=#{line}&column=#{ENV['TM_COLUMN_NUMBER']}"
