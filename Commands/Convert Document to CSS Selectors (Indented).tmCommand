@@ -6,7 +6,7 @@
 	<string>nop</string>
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
-require "html_to_selectors"
+require ENV['TM_BUNDLE_SUPPORT'] + "/lib/html_to_selectors"
 </string>
 	<key>fallbackInput</key>
 	<string>document</string>

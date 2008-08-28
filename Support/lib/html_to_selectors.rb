@@ -21,12 +21,13 @@ class HTMLDoc
       
       # Filter the dad
       dad = '' if n['id'] # IDs should always be the root element
+      dad += ' ' if dad and !dad.empty? and !(dad =~ / $/)
       
       has_kids = (n/'>*').reject{|node|!node.elem?}.length > 0
       
       # Create the selector
       s = [
-        dad+' ',
+        dad,
         n.name,
         ('#'+n['id'] if n['id']),
         ('.'+n['class'].split(' ').join('.') if n['class']),
