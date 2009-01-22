@@ -83,7 +83,7 @@
 				</dict>
 			</dict>
 			<key>end</key>
-			<string>(?&lt;=\))</string>
+			<string>(?&lt;=[a-zA-Z0-9_!?])(?=\()</string>
 			<key>name</key>
 			<string>meta.function-call.method.with-arguments.ruby</string>
 			<key>patterns</key>
@@ -102,17 +102,13 @@
 					<key>name</key>
 					<string>entity.name.function.ruby</string>
 				</dict>
-				<dict>
-					<key>include</key>
-					<string>$self</string>
-				</dict>
 			</array>
 		</dict>
 		<dict>
 			<key>begin</key>
 			<string>(?=[a-zA-Z][a-zA-Z0-9_!?]*\()</string>
 			<key>end</key>
-			<string>(?&lt;=\))</string>
+			<string>(?&lt;=[a-zA-Z0-9_!?])(?=\()</string>
 			<key>name</key>
 			<string>meta.function-call.ruby</string>
 			<key>patterns</key>
@@ -130,10 +126,6 @@
 					<string>([a-zA-Z0-9_!?]+)(?=\()</string>
 					<key>name</key>
 					<string>entity.name.function.ruby</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>$self</string>
 				</dict>
 			</array>
 		</dict>

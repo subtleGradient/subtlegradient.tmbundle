@@ -11,9 +11,9 @@
 ### Converted to Applescript by Thomas Aylott - http://subtleGradient.com
 ###
 
-osascript -e 'tell the application "Safari" to do JavaScript "document.location=\"javascript:void(function(){var%20i,a,s;a=document.getElementsByTagName('\''link'\'');for(i=0;i%3Ca.length;i++){s=a[i];if(s.rel.toLowerCase().indexOf('\''stylesheet'\'')%3E=0&amp;&amp;s.href)%20{var%20h=s.href.replace(/(&amp;|%5C?)forceReload=\\d+/,'\'''\'');s.href=h+(h.indexOf('\''?'\'')%3E=0?'\''&amp;'\'':'\''?'\'')+'\''forceReload='\''+(new%20Date().valueOf())}}})();\";" in document 1' &amp;&gt;/dev/null &amp;
+ps -xc|grep -sq Safari &amp;&amp; osascript -e 'tell app "Safari" to do JavaScript "document.location=\"javascript:void(function(){var%20i,a,s;a=document.getElementsByTagName('\''link'\'');for(i=0;i%3Ca.length;i++){s=a[i];if(s.rel.toLowerCase().indexOf('\''stylesheet'\'')%3E=0&amp;&amp;s.href)%20{var%20h=s.href.replace(/(&amp;|%5C?)forceReload=\\d+/,'\'''\'');s.href=h+(h.indexOf('\''?'\'')%3E=0?'\''&amp;'\'':'\''?'\'')+'\''forceReload='\''+(new%20Date().valueOf())}}})();\";" in document 1' &amp;&gt;/dev/null &amp;
 
-echo "Safari CSS Refreshing…"
+echo "Refreshing Safari CSS…"
 </string>
 	<key>input</key>
 	<string>none</string>

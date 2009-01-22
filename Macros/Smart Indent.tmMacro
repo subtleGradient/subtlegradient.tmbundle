@@ -62,11 +62,9 @@
 		</dict>
 	</array>
 	<key>keyEquivalent</key>
-	<string>~@[</string>
+	<string>~@{</string>
 	<key>name</key>
 	<string>Smart Indent</string>
-	<key>scope</key>
-	<string>disabled</string>
 	<key>uuid</key>
 	<string>3F45B2D4-FC42-4282-8FD5-8A74223AFCBC</string>
 </dict>

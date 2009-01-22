@@ -5,13 +5,8 @@
 	<key>beforeRunningCommand</key>
 	<string>nop</string>
 	<key>command</key>
-	<string>###	Refresh All Active Browsers - OmniWeb, Safari, Firefox &amp; IE
-### v1.01. 2005-03-29
-### Modified by Thomas Aylott - http://subtleGradient.com
-###
-
-# Check if Safari is running, if so refresh
-osascript -e 'tell app "Safari" to do JavaScript "window.location.reload();" in first document'
+	<string># Check if WebKit is running, if so refresh
+ps -xc|grep -sq Safari &amp;&amp; osascript -e 'tell app "WebKit"' -e 'activate' -e 'do JavaScript "window.location.reload();" in first document' -e 'end tell'
 </string>
 	<key>input</key>
 	<string>none</string>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+html = STDIN.read
+leading = html.scan(/\A^\s+/).first
+leading ||= ''
+
+html.gsub!(/\A^\s+&lt;/,'&lt;')
+
+html.gsub!(/&gt;\s+&lt;/m,'&gt;&lt;')
+html.gsub!(/\s+&lt;/m,' &lt;')
+html.gsub!(/^ &lt;/,'&lt;')
+html.gsub!(/&gt;\s+(?=\S)/m,'&gt; ')
+
+print leading, html</string>
+	<key>fallbackInput</key>
+	<string>line</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^~q</string>
+	<key>name</key>
+	<string>Reformat HTML Selection / Line</string>
+	<key>output</key>
+	<string>replaceSelectedText</string>
+	<key>scope</key>
+	<string>text.html</string>
+	<key>uuid</key>
+	<string>741EAEB8-F871-425D-91F9-A4B087FEDFFB</string>
+</dict>
+</plist>

@@ -535,6 +535,12 @@ def svn?(path)
   File.exists?(File.dirname(path) + '/.svn')
 end
 
+def show_json
+  $CONTENTS.gsub!(/(?=['\\\n])/,'\\').gsub!(/</,'&lt;')
+  $CONTENTS = "document.write(pp(eval('(#$CONTENTS)')));"
+  run_javascript
+end
+
 def run_javascript
   # puts %{<script src="#{ENV['TM_SUPPORT_PATH']}/script/prototype.js" type="text/javascript"></script>} if ENV['TM_SCOPE'] =~ /prototype/
   puts <<-HTML
@@ -544,6 +550,23 @@ def run_javascript
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<title>Testing MooTools Code</title>
+	<style type="text/css" media="screen">
+		#debug{
+			font-size:10px;
+			line-height:13px;
+			font-size:10px;color:#222;background:#fff;font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;
+		}
+		
+		#debug .string {background:#ffe;outline:1px solid #cc9;color:#663; *border:1px solid #cc9;color:#663; display: inline-block; padding: 0.25em 0.5em 0.25em 1.5em; margin-bottom:1px; text-indent:-1em;}
+		#debug .number {background:#fef;outline:1px solid #c9c;color:#636; *border:1px solid #c9c;color:#636; display: inline-block; padding: 0.25em 0.5em 0.25em 1.5em; margin-bottom:1px; text-indent:-1em;}
+		#debug .boolean{background:#eff;outline:1px solid #9cc;color:#366; *border:1px solid #9cc;color:#366; display: inline-block; padding: 0.25em 0.5em 0.25em 1.5em; margin-bottom:1px; text-indent:-1em;}
+		#debug .date   {background:#ffe;outline:1px solid #cc9;color:#663; *border:1px solid #cc9;color:#663; display: inline-block; padding: 0.25em 0.5em 0.25em 1.5em; margin-bottom:1px; text-indent:-1em;}
+		
+		#debug .object {background:#efe; border:1px solid #9c9;color:#363; display: inline-block;  padding: 0.25em 0.5em; border-collapse:collapse;}
+		#debug .array  {background:#fee; border:1px solid #c99;color:#633; display: inline-block;  padding: 0.25em 0.5em; margin-left:1em;}
+		#debug .object th{text-align:right; padding-right:0.5em; vertical-align: top;}
+		#debug .object th+th{text-align:left;}
+	</style>
 </head>
 <body>
 	HTML
@@ -552,20 +575,73 @@ def run_javascript
 #{File.read(File.dirname(__FILE__)+"/../js/mootools.js")}
 </script>
 HTML
+=begin
+curl -s http://mootools.net/download/get/mootools-core-edge.js > "$TM_DIRECTORY/../js/mootools.js"
+=end
   puts <<-HTML
-<pre>
+<pre id="debug">
 <script type="text/javascript" charset="utf-8">
+  Object.type = function(obj){
+  	if (obj == undefined) return false;
+  	if (Object.prototype.toString.call(obj) === '[object Array]') return 'array';
+  	if (obj.nodeName){
+  		switch (obj.nodeType){
+  		case 1: return 'element';
+  		case 3: return (/\S/).test(obj.nodeValue) ? 'textnode' : 'whitespace';
+  		}
+  	} else if (typeof obj.length == 'number'){
+  		if (obj.callee) return 'arguments';
+  		else if (obj.item) return 'collection';
+  	}
+  	return typeof obj;
+  };
+  function pp(object){
+  	switch (Object.type(object)){
+  	case 'object':
+  		var h = '<table class="object"><tr><th>KEY</th><th>VALUE</th></tr>';
+  		for (var key in object) {
+  			var value = object[key];
+  			h += '<tr><th> '+key+' </th><td> '+pp(value)+' </td></tr>'
+  		}
+  		h += '</table>'
+  		return h
+
+  		break;
+  	case 'array':
+  		var h = '<ol class="array" start="0">';
+  		for (var key in object) {
+  			var value = object[key];
+  			h += '<li>'+pp(value)+'</li>'
+  		}
+  		h += '</ol>';
+  		return h
+
+  		break;
+  	case false: return 'false'; break;
+  	case 'string':
+  		return '<span class="string">'+object.toString().replace(/^(http.*)$/,'<a href="$1">$1</a>')+'</span>';
+  		break;
+  	case 'number':  return '<span class="number">'+object.toString()+'</span>'; break;
+  	case 'boolean': return '<span class="boolean">'+object.toString()+'</span>'; break;
+  	case 'date':    return '<span class="date">'+object.toString()+'</span>'; break;
+  	default: return '<span>'+object.toString()+'</span>';
+  	}
+  };
+  
+</script>
+<script>
+try{throw {}}catch(e){ window.__line=(e.line||0) + 3 };
 try{
-//YOUR STUFF//
-//YOUR STUFF//
-//YOUR STUFF//
-
+/*----  YOUR CODE ----*/
 #{$CONTENTS}
-
-//YOUR STUFF//
-//YOUR STUFF//
-//YOUR STUFF//
-}catch(e){ document.write(e) };
+/*---- /YOUR CODE ----*/
+}catch(e){
+	console.log(e);
+	var __line_offset = #{ENV['TM_INPUT_START_LINE'] || -1};
+	document.body.appendChild(
+	  document.createTextNode("#{ENV['TM_FILEPATH']}:" + ((e.line||1) - __line + __line_offset) +"\\n"+ e.message||'')
+  );
+};
 </script>
 </pre>
 HTML
@@ -675,6 +751,8 @@ def init
     css_preview
   when /^\s*text\.html/i
     set_base
+  when /^\s*(source\.json)/i
+    show_json
   when /^\s*(source\.js)/i
     run_javascript
   when /source\.ruby/
